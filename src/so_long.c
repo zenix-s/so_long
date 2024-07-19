@@ -120,8 +120,8 @@ void	parse_map(t_game *game, char **argv)
 
 void	print_map(t_game *game)
 {
-	size_t x;
-	size_t y;
+	size_t	x;
+	size_t	y;
 
 	y = 0;
 	while (y < game->map->height)
@@ -136,13 +136,13 @@ void	print_map(t_game *game)
 	}
 }
 
-
 void	load_map(t_game *game)
 {
-	size_t x;
-	size_t y;
-	int i;
-	int j;
+	size_t	x;
+	size_t	y;
+	int		i;
+	int		j;
+			mlx_image_t *tile;
 
 	y = 0;
 	while (y < game->map->height)
@@ -152,10 +152,10 @@ void	load_map(t_game *game)
 		{
 			if (game->map->map[y][x] == '\n')
 				continue ;
-			mlx_image_t *tile;
 			tile = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
 			mlx_image_to_window(game->mlx, tile, x * TILE_SIZE, y * TILE_SIZE);
-			if (game->map->map[y][x] == '0' || game->map->map[y][x] == 'C' || game->map->map[y][x] == 'P')
+			if (game->map->map[y][x] == '0' || game->map->map[y][x] == 'C'
+				|| game->map->map[y][x] == 'P')
 			{
 				i = 0;
 				while (i < TILE_SIZE)
@@ -197,7 +197,6 @@ void	load_map(t_game *game)
 					i++;
 				}
 			}
-
 			x++;
 		}
 		y++;
@@ -300,7 +299,8 @@ void	load_map(t_game *game)
 // 		x = 0;
 // 		while (x < game->map->width)
 // 		{
-// 			ft_printf("Loading tile %u, %u\n", (unsigned int)x, (unsigned int)y);
+// 			ft_printf("Loading tile %u, %u\n", (unsigned int)x,
+				(unsigned int)y);
 // 			if (game->map->map[y][x] == '1')
 // 				game->map->tiles[y * game->map->width + x]->type = '1';
 // 			else if (game->map->map[y][x] == '0')
@@ -349,13 +349,11 @@ int	main(int argc, char **argv)
 	parse_map(game, argv);
 	print_map(game);
 	mlx_set_setting(MLX_MAXIMIZED, false);
-	game->mlx = mlx_init(WIDTH, HEIGHT, "so_long", true);
+	game->mlx = mlx_init(game->map->width, game->map->height, "so_long", true);
 	if (game->mlx == NULL)
 		ft_error("Failed to initialize MLX");
 	// load_tiles(game);
-
 	load_map(game);
-
 	// int x = 0;
 	// int y = 0;
 	// mlx_image_t *img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
@@ -370,8 +368,6 @@ int	main(int argc, char **argv)
 	// 	}
 	// 	y++;
 	// }
-
-
 	init_player(game);
 	mlx_loop_hook(game->mlx, ft_hook, game);
 	mlx_loop(game->mlx);
