@@ -23,10 +23,12 @@
 # define WIDTH 1024
 # define HEIGHT 956
 
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 
 typedef struct s_player
 {
+	size_t			init_x;
+	size_t			init_y;
 	int				score;
 	int				moves;
 	mlx_image_t		*img;
@@ -45,15 +47,17 @@ typedef struct s_collectible
 typedef struct s_tile
 {
 	mlx_image_t		*img;
-	char 			type;
+	char			type;
 }					t_tile;
 
 typedef struct s_map
 {
-	size_t				width;
-	size_t				height;
+	size_t			width;
+	size_t			height;
 	char			**map;
+	size_t			n_enemies;
 	t_enemy			**enemies;
+	size_t			n_collectibles;
 	t_collectible	**collectibles;
 	t_tile			**tiles;
 }					t_map;
@@ -62,7 +66,7 @@ typedef struct s_game
 {
 	mlx_t			*mlx;
 	t_player		*player;
-	t_map 			*map;
+	t_map			*map;
 }					t_game;
 
 void				ft_error(char *msg);

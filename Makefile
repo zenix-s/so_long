@@ -38,11 +38,11 @@ all: libmlx libft $(NAME)
 
 clean:
 	@$(MAKE) -s clean -C $(LIBFT_SRC)
-	@$(rm) $(OBJS)
-	@$(rm) $(LIBMLX)/build
+	@$(RM) $(OBJS)
+	@$(RM) $(LIBMLX)/build
 
 fclean: clean
-	@rm -rf $(NAME)
+	@(RM)  $(NAME)
 	@$(MAKE) -s fclean -C $(LIBFT_SRC)
 
 re: clean all

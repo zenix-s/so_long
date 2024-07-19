@@ -29,13 +29,13 @@ static void	ft_hook(void *param)
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(game->mlx);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
-		ft_player_move(game, 'u', 25);
+		ft_player_move(game, 'u', 5);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
-		ft_player_move(game, 'd', 25);
+		ft_player_move(game, 'd', 5);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		ft_player_move(game, 'l', 25);
+		ft_player_move(game, 'l', 5);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		ft_player_move(game, 'r', 25);
+		ft_player_move(game, 'r', 5);
 }
 
 void	init_map(t_game *game)
@@ -136,14 +136,110 @@ void	print_map(t_game *game)
 	}
 }
 
+void	alloc_tiles(t_game *game)
+{
+	int	total_tiles;
+
+	ft_printf("Allocating memory for tiles\n");
+	total_tiles = game->map->width * game->map->height;
+	game->map->tiles = (t_tile **)malloc(sizeof(t_tile *) * total_tiles);
+	if (game->map->tiles == NULL)
+		ft_error("Failed to allocate memory for tiles");
+}
+
+void	init_tile(t_tile **tile)
+{
+	*tile = (t_tile *)malloc(sizeof(t_tile));
+	if (*tile == NULL)
+		ft_error("Failed to allocate memory for tile");
+}
+
+void	init_tile_img(t_tile *tile, t_game *game)
+{
+	tile->img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
+	if (tile->img == NULL)
+		ft_error("Failed to create tile image");
+}
+
+void	draw_green_tile(t_tile *tile)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < TILE_SIZE)
+	{
+		j = 0;
+		while (j < TILE_SIZE)
+		{
+			mlx_put_pixel(tile->img, i, j, 0x00FF00FF);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_blue_tile(t_tile *tile)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < TILE_SIZE)
+	{
+		j = 0;
+		while (j < TILE_SIZE)
+		{
+			mlx_put_pixel(tile->img, i, j, 0x0000FFFF);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_yellow_tile(t_tile *tile)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < TILE_SIZE)
+	{
+		j = 0;
+		while (j < TILE_SIZE)
+		{
+			mlx_put_pixel(tile->img, i, j, 0xF0F000FF);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_yellow_triangle_tile(t_tile *tile)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < TILE_SIZE)
+	{
+		j = 0;
+		while (j < TILE_SIZE)
+		{
+			if (i + j < TILE_SIZE)
+				mlx_put_pixel(tile->img, i, j, 0xF0F00FFF);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	load_map(t_game *game)
 {
 	size_t	x;
 	size_t	y;
-	int		i;
-	int		j;
-			mlx_image_t *tile;
 
+	alloc_tiles(game);
 	y = 0;
 	while (y < game->map->height)
 	{
@@ -151,51 +247,28 @@ void	load_map(t_game *game)
 		while (x < game->map->width)
 		{
 			if (game->map->map[y][x] == '\n')
+			{
+				x++;
 				continue ;
-			tile = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
-			mlx_image_to_window(game->mlx, tile, x * TILE_SIZE, y * TILE_SIZE);
-			if (game->map->map[y][x] == '0' || game->map->map[y][x] == 'C'
-				|| game->map->map[y][x] == 'P')
-			{
-				i = 0;
-				while (i < TILE_SIZE)
-				{
-					j = 0;
-					while (j < TILE_SIZE)
-					{
-						mlx_put_pixel(tile, i, j, 0x00FF00FF);
-						j++;
-					}
-					i++;
-				}
 			}
+			init_tile(&game->map->tiles[y * game->map->width + x]);
+			init_tile_img(game->map->tiles[y * game->map->width + x], game);
+			mlx_image_to_window(game->mlx, game->map->tiles[y * game->map->width
+				+ x]->img, x * TILE_SIZE, y * TILE_SIZE);
+			if (game->map->map[y][x] == '0')
+				draw_green_tile(game->map->tiles[y * game->map->width + x]);
 			else if (game->map->map[y][x] == '1')
+				draw_blue_tile(game->map->tiles[y * game->map->width + x]);
+			else if (game->map->map[y][x] == 'C')
 			{
-				i = 0;
-				while (i < TILE_SIZE)
-				{
-					j = 0;
-					while (j < TILE_SIZE)
-					{
-						mlx_put_pixel(tile, i, j, 0x0000FFFF);
-						j++;
-					}
-					i++;
-				}
+				draw_green_tile(game->map->tiles[y * game->map->width + x]);
+				game->map->n_collectibles++;
 			}
 			else if (game->map->map[y][x] == 'E')
+				draw_yellow_tile(game->map->tiles[y * game->map->width + x]);
+			else if (game->map->map[y][x] == 'P')
 			{
-				i = 0;
-				while (i < TILE_SIZE)
-				{
-					j = 0;
-					while (j < TILE_SIZE)
-					{
-						mlx_put_pixel(tile, i, j, 0xF0F000FF);
-						j++;
-					}
-					i++;
-				}
+				draw_green_tile(game->map->tiles[y * game->map->width + x]);
 			}
 			x++;
 		}
@@ -203,23 +276,77 @@ void	load_map(t_game *game)
 	}
 }
 
-// void	alloc_tiles(t_game *game)
-// {
-// 	int	total_tiles;
+void draw_collectible(t_collectible *collectible)
+{
+	int	i;
+	int	j;
 
-// 	ft_printf("Allocating memory for tiles\n");
-// 	total_tiles = game->map->width * game->map->height;
-// 	game->map->tiles = (t_tile **)malloc(sizeof(t_tile *) * total_tiles);
-// 	if (game->map->tiles == NULL)
-// 		ft_error("Failed to allocate memory for tiles");
-// }
-// //
-// void	init_tile(t_tile **tile)
-// {
-// 	*tile = (t_tile *)malloc(sizeof(t_tile));
-// 	if (*tile == NULL)
-// 		ft_error("Failed to allocate memory for tile");
-// }
+	i = 0;
+	while (i < TILE_SIZE)
+	{
+		j = 0;
+		while (j < TILE_SIZE)
+		{
+			if (i + j < TILE_SIZE)
+				mlx_put_pixel(collectible->img, i, j, 0xF0F00FFF);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	alloc_collectibles(t_game *game)
+{
+	game->map->collectibles = (t_collectible **)malloc(sizeof(t_collectible *)
+			* game->map->n_collectibles);
+	if (game->map->collectibles == NULL)
+		ft_error("Failed to allocate memory for collectibles");
+}
+
+void init_collectible(t_collectible **collectible)
+{
+	*collectible = (t_collectible *)malloc(sizeof(t_collectible));
+	if (*collectible == NULL)
+		ft_error("Failed to allocate memory for collectible");
+}
+
+void init_collectible_img(t_collectible *collectible, t_game *game)
+{
+	collectible->img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
+	if (collectible->img == NULL)
+		ft_error("Failed to create image for collectible");
+}
+
+void load_collectibles(t_game *game)
+{
+	size_t	x;
+	size_t	y;
+	size_t	i;
+
+	alloc_collectibles(game);
+	y = 0;
+	i = 0;
+	while (y < game->map->height)
+	{
+		x = 0;
+		while (x < game->map->width)
+		{
+			if (game->map->map[y][x] == 'C')
+			{
+				init_collectible(&game->map->collectibles[i]);
+				init_collectible_img(game->map->collectibles[i], game);
+				draw_collectible(game->map->collectibles[i]);
+				mlx_image_to_window(game->mlx, game->map->collectibles[i]->img,
+						x * TILE_SIZE, y * TILE_SIZE);
+				i++;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+
 
 // // void	load_textures(t_game *game)
 // // {
@@ -253,88 +380,6 @@ void	load_map(t_game *game)
 // 	// if exit blue
 // 	// if wall red
 
-// void	draw_tile(t_game *game, int x, int y)
-// {
-// 	t_tile	*tile;
-// 	int		i;
-// 	int		j;
-
-// 	tile = game->map->tiles[y * game->map->width + x];
-// 	i = 0;
-// 	while (i < TILE_SIZE)
-// 	{
-// 		j = 0;
-// 		while (j < TILE_SIZE)
-// 		{
-// 			if (tile->type == '1')
-// 				mlx_put_pixel(tile->img, i, j, 0xFF0000);
-// 			else if (tile->type == '0')
-// 				mlx_put_pixel(tile->img, i, j, 0xFFFFFF);
-// 			else if (tile->type == 'C')
-// 				mlx_put_pixel(tile->img, i, j, 0xFFD700);
-// 			else if (tile->type == 'E')
-// 				mlx_put_pixel(tile->img, i, j, 0x0000FF);
-// 			else if (tile->type == 'P')
-// 				mlx_put_pixel(tile->img, i, j, 0x00FF00);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-// void	load_tiles(t_game *game)
-// {
-// 	size_t	x;
-// 	size_t	y;
-
-// 	ft_printf("Loading tiles\n");
-// 	// total tiles = game->map->width * game->map->height
-// 	alloc_tiles(game);
-// 	ft_printf("Allocated memory for tiles\n");
-
-// 	y = 0;
-// 	while (y < game->map->height)
-// 	{
-// 		ft_printf("Loading tiles for row %u\n", (unsigned int)y);
-// 		x = 0;
-// 		while (x < game->map->width)
-// 		{
-// 			ft_printf("Loading tile %u, %u\n", (unsigned int)x,
-				(unsigned int)y);
-// 			if (game->map->map[y][x] == '1')
-// 				game->map->tiles[y * game->map->width + x]->type = '1';
-// 			else if (game->map->map[y][x] == '0')
-// 				game->map->tiles[y * game->map->width + x]->type = '0';
-// 			else if (game->map->map[y][x] == 'C')
-// 				game->map->tiles[y * game->map->width + x]->type = 'C';
-// 			else if (game->map->map[y][x] == 'E')
-// 				game->map->tiles[y * game->map->width + x]->type = 'E';
-// 			else if (game->map->map[y][x] == 'P')
-// 				game->map->tiles[y * game->map->width + x]->type = 'P';
-// 			else if (game->map->map[y][x] == '\n')
-// 			{
-// 				ft_printf("Newline\n");
-// 				continue ;
-// 			}
-// 			else
-// 				ft_error("Invalid map");
-// 			ft_printf("%c", game->map->tiles[y * game->map->width + x]->type);
-// 			init_tile(&game->map->tiles[y * game->map->width + x]);
-// 			game->map->tiles[y * game->map->width
-// 				+ x]->img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
-// 			if (game->map->tiles[y * game->map->width + x]->img == NULL)
-// 				ft_error("Failed to create tile image");
-// 			if (mlx_image_to_window(game->mlx, game->map->tiles[y
-// 					* game->map->width + x]->img, x * TILE_SIZE, y
-// 					* TILE_SIZE) < 0)
-// 				ft_error("Failed to draw tile");
-// 			draw_tile(game, x, y);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
-
 int	main(int argc, char **argv)
 {
 	t_game	*game;
@@ -349,25 +394,13 @@ int	main(int argc, char **argv)
 	parse_map(game, argv);
 	print_map(game);
 	mlx_set_setting(MLX_MAXIMIZED, false);
-	game->mlx = mlx_init(game->map->width, game->map->height, "so_long", true);
+	game->mlx = mlx_init(game->map->width * TILE_SIZE, game->map->height
+			* TILE_SIZE, "so_long", true);
 	if (game->mlx == NULL)
 		ft_error("Failed to initialize MLX");
 	// load_tiles(game);
 	load_map(game);
-	// int x = 0;
-	// int y = 0;
-	// mlx_image_t *img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
-	// mlx_image_to_window(game->mlx, img, 10, 10);
-	// while (y < TILE_SIZE)
-	// {
-	// 	x = 0;
-	// 	while (x < TILE_SIZE)
-	// 	{
-	// 		mlx_put_pixel(img, x, y, 0x00FF00FF);
-	// 		x++;
-	// 	}
-	// 	y++;
-	// }
+	load_collectibles(game);
 	init_player(game);
 	mlx_loop_hook(game->mlx, ft_hook, game);
 	mlx_loop(game->mlx);
