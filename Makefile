@@ -42,7 +42,7 @@ clean:
 	@$(RM) $(LIBMLX)/build
 
 fclean: clean
-	@(RM)  $(NAME)
+	@$(RM)  $(NAME)
 	@$(MAKE) -s fclean -C $(LIBFT_SRC)
 
 re: clean all
