@@ -41,6 +41,8 @@ typedef struct s_enemy
 
 typedef struct s_collectible
 {
+	size_t			x;
+	size_t			y;
 	mlx_image_t		*img;
 }					t_collectible;
 // struct for walls, floor, etc
@@ -61,6 +63,7 @@ typedef struct s_map
 	t_enemy			**enemies;
 	size_t			n_collectibles;
 	t_collectible	**collectibles;
+	size_t			n_tiles;
 	t_tile			**tiles;
 }					t_map;
 
@@ -72,8 +75,6 @@ typedef struct s_game
 }					t_game;
 
 void				ft_error(char *msg);
-void				init_player(t_game *game);
 
-void				ft_player_move(t_game *game, char direction, int total);
 
 #endif
