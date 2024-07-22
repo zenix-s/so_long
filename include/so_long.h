@@ -46,6 +46,8 @@ typedef struct s_collectible
 // struct for walls, floor, etc
 typedef struct s_tile
 {
+	size_t			x;
+	size_t			y;
 	mlx_image_t		*img;
 	char			type;
 }					t_tile;
