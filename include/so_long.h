@@ -19,10 +19,9 @@
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 // LIBFT
 # include "../lib/libft/libft.h"
-//
-# include <stdio.h>
+// Malloc, free, exit
 # include <stdlib.h>
-// Close,
+// Close
 # include <unistd.h>
 // Open
 # include <fcntl.h>
@@ -113,16 +112,19 @@ void				ft_error(char *msg);
 // ALLOC STRUCTS
 t_bool				alloc_map(t_game *game);
 t_bool				alloc_tileset(t_game *game);
+t_bool				alloc_collectibles(t_game *game, size_t n_collectibles);
 
 // INIT STRUCTS
 t_bool				init_game(t_game **game);
 t_bool				init_map(t_game *game, char **file_path);
 t_bool				init_tileset(t_game *game);
 t_bool				init_collectibles(t_game *game);
+t_bool				init_player(t_game *game);
 
 // RENDER
 t_bool				render_tileset(t_game *game);
 t_bool				render_collectibles(t_game *game);
+t_bool				render_player(t_game *game);
 
 // TEXTURES
 t_bool				load_textures(t_game *game);
@@ -130,10 +132,13 @@ t_bool				load_textures(t_game *game);
 t_bool				check_arguments(int argc, char **argv);
 
 // MAP PARSING
-t_bool				check_line(t_game *game, char *line);
+// t_bool				check_line(t_game *game, char *line);
 
 // MLX
 t_bool				init_mlx(t_game *game);
+
+// PLAYER MOVEMENT
+t_bool				ft_player_move(t_game *game, char direction, int total);
 
 void				print_layout(t_game *game);
 
