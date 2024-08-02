@@ -1,73 +1,80 @@
 #include "../../include/so_long.h"
 
-// Check if the map is valid
-// Valid characters: '1', '0', 'P', 'E', 'C' Alredy checked
-// 'P' and 'E' must appear exactly once TODO
-// 'C' must appear at least once TODO
-// '1' must be the border of the map TODO
-// All 'C' must be reachable from 'P' TODO
 
-t_bool is_player_present(t_game *game)
+t_bool	find_valid_path(t_game *game)
 {
-	int y;
-	int x;
+	t_dis_set	*dis_set;
+	size_t		y;
+	size_t		x;
+	const int	directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+	int			i;
+	size_t		new_x;
+	size_t		new_y;
+	t_dis_item	*root;
 
+	if (!alloc_dis_set(&dis_set, game))
+		return (FALSE);
 	y = 0;
 	while (y < game->map->height)
 	{
-		x = 0;
-		while (x < game->map->width)
+		x = -1;
+		while (++x < game->map->width)
 		{
-			if (game->map->layout[y][x] == 'P')
-				return (TRUE);
-			x++;
+			if (game->map->layout[y][x] == '1')
+				continue ;
+			// got for each direction and join the sets
+			// if the direction is not null
+			i = -1;
+			while (++i < 4)
+			{
+				new_x = x + directions[i][0];
+				new_y = y + directions[i][1];
+				if (game->map->layout[new_y][new_x] == '1')
+					continue ;
+				union_dis_items(get_dis_item(dis_set, x, y),
+					get_dis_item(dis_set, new_x, new_y));
+			}
 		}
 		y++;
 	}
-	return (FALSE);
-}
-
-t_bool is_exit_present(t_game *game)
-{
-	int y;
-	int x;
-
+	// Go from the start to the end and check if all Player,
+	// Collectible and Exit have the same root
+	// If they have the same root, then the path is valid
+	// Else, the path is invalid
 	y = 0;
+	root = NULL;
 	while (y < game->map->height)
 	{
-		x = 0;
-		while (x < game->map->width)
+		x = -1;
+		while (++x < game->map->width)
 		{
-			if (game->map->layout[y][x] == 'E')
-				return (TRUE);
-			x++;
+			if (game->map->layout[y][x] == '1')
+				continue ;
+			if (game->map->layout[y][x] == 'P' || game->map->layout[y][x] == 'C'
+				|| game->map->layout[y][x] == 'E')
+			{
+				if (root == NULL)
+					root = find_dis_item(get_dis_item(dis_set, x, y));
+				else if (root != find_dis_item(get_dis_item(dis_set, x, y)))
+				{
+					// Cleanup
+					// TODO: Implement cleanup
+					return (FALSE);
+				}
+			}
 		}
 		y++;
 	}
-	return (FALSE);
+	return (TRUE);
 }
 
-t_bool is_collectible_present(t_game *game)
+t_bool	valid_map(t_game *game, t_validate_map *validate_map)
 {
-	int y;
-	int x;
-
-	y = 0;
-	while (y < game->map->height)
-	{
-		x = 0;
-		while (x < game->map->width)
-		{
-			if (game->map->layout[y][x] == 'C')
-				return (TRUE);
-			x++;
-		}
-		y++;
-	}
-	return (FALSE);
-}
-
-t_bool is_valid_map(t_game *game)
-{
-
+	if (!valid_n_items(validate_map))
+		return (FALSE);
+	if (!check_border(game))
+		return (FALSE);
+	if (!find_valid_path(game))
+		return (ft_error("Not all collectibles and exit are reachable"), FALSE);
+	return (TRUE);
 }

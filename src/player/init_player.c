@@ -5,9 +5,6 @@ t_bool	alloc_player(t_game *game)
 	game->player = (t_player *)malloc(sizeof(t_player));
 	if (game->player == NULL)
 		return (ft_error("Failed to allocate memory for player"), FALSE);
-	game->player->img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
-	if (game->player->img == NULL)
-		return (ft_error("Failed to create player image"), FALSE);
 	return (TRUE);
 }
 
@@ -46,5 +43,7 @@ t_bool	init_player(t_game *game)
 			FALSE);
 	game->player->target_x = x;
 	game->player->target_y = y;
+	game->player->moves = 0;
+	game->player->score = 0;
 	return (TRUE);
 }

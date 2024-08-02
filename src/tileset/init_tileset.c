@@ -1,13 +1,14 @@
 #include "../../include/so_long.h"
 
-static t_bool	init_tile(t_tile **tile, char type, t_game *game)
+static t_bool	init_tile(t_tile **tile, char type)
 {
 	*tile = (t_tile *)malloc(sizeof(t_tile));
 	if (*tile == NULL)
 		return (ft_error("Failed to allocate memory for tile"), FALSE);
-	(*tile)->img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
-	if ((*tile)->img == NULL)
-		return (ft_error("Failed to allocate memory for tile"), FALSE);
+	// (*tile)->img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
+	// if ((*tile)->img == NULL)
+	// 	return (ft_error("Failed to allocate memory for tile"), FALSE);
+	(*tile)->img = NULL;
 	(*tile)->type = type;
 	return (true);
 }
@@ -40,11 +41,9 @@ t_bool	init_tileset(t_game *game)
 		while (x < game->map->width)
 		{
 			if (is_floor(game->map->layout[y][x]))
-				init_tile(&game->tileset->tiles[y * game->map->width + x], '0',
-					game);
+				init_tile(&game->tileset->tiles[y * game->map->width + x], '0');
 			else if (is_wall(game->map->layout[y][x]))
-				init_tile(&game->tileset->tiles[y * game->map->width + x], '1',
-					game);
+				init_tile(&game->tileset->tiles[y * game->map->width + x], '1');
 			game->tileset->tiles[y * game->map->width + x]->x = x * TILE_SIZE;
 			game->tileset->tiles[y * game->map->width + x]->y = y * TILE_SIZE;
 			x++;
