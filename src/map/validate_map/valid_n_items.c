@@ -1,13 +1,12 @@
 #include "../../../include/so_long.h"
 
-
-t_bool	valid_n_items(t_validate_map *validate_map)
+t_bool	valid_n_items(t_map_info *map_info)
 {
-	if (!validate_map->player)
+	if (!map_info->player)
 		return (ft_error("Player not found"), FALSE);
-	if (!validate_map->exit)
+	if (!map_info->exit)
 		return (ft_error("Exit not found"), FALSE);
-	if (!validate_map->collectible)
+	if (!map_info->collectible)
 		return (ft_error("Collectible not found"), FALSE);
 	return (TRUE);
 }

@@ -1,6 +1,6 @@
 #include "../include/so_long.h"
 
-t_bool load_textures(t_game *game)
+t_bool	load_textures(t_game *game)
 {
 	game->textures = malloc(sizeof(t_textures));
 	if (game->textures == NULL)
@@ -17,6 +17,12 @@ t_bool load_textures(t_game *game)
 	game->textures->collectible = mlx_load_png("textures/collectible.png");
 	if (game->textures->collectible == NULL)
 		return (ft_error("Failed to load collectible texture"), FALSE);
+	game->textures->exit_open = mlx_load_png("textures/exit_open.png");
+	if (game->textures->exit_open == NULL)
+		return (ft_error("Failed to load exit_open texture"), FALSE);
+	game->textures->exit_closed = mlx_load_png("textures/exit_closed.png");
+	if (game->textures->exit_closed == NULL)
+		return (ft_error("Failed to load exit_closed texture"), FALSE);
 	ft_printf("TODO: Load textures\n");
 	return (TRUE);
 }

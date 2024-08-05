@@ -2,8 +2,8 @@
 
 t_bool	check_border(t_game *game)
 {
-	size_t	x;
-	size_t	y;
+	int32_t	x;
+	int32_t	y;
 
 	y = 0;
 	while (y < game->map->height)

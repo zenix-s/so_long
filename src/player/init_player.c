@@ -8,7 +8,7 @@ t_bool	alloc_player(t_game *game)
 	return (TRUE);
 }
 
-t_bool	find_player(t_game *game, size_t *x, size_t *y)
+t_bool	find_player(t_game *game, int32_t *x, int32_t *y)
 {
 	t_bool	player_found;
 
@@ -33,14 +33,13 @@ t_bool	find_player(t_game *game, size_t *x, size_t *y)
 
 t_bool	init_player(t_game *game)
 {
-	size_t	x;
-	size_t	y;
+	int32_t	x;
+	int32_t	y;
 
 	if (!alloc_player(game))
 		return (FALSE);
 	if (!find_player(game, &x, &y))
-		return (ft_error("Player starting position not found in the map"),
-			FALSE);
+		return (ft_error("Player starting position not found"), FALSE);
 	game->player->target_x = x;
 	game->player->target_y = y;
 	game->player->moves = 0;

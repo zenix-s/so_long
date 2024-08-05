@@ -25,19 +25,18 @@
 # include <unistd.h>
 // Open
 # include <fcntl.h>
-
-# define WIDTH 1024
-# define HEIGHT 956
+# include <stdio.h>
 
 # define TILE_SIZE 64
-# define CHARACTER_SPEED 205.0
-# define CHARACTER_DISTANCE 64.0
+// Character Speed pixels per second
+# define CHARACTER_SPEED 320.0
+# define VALID_EXTENSION ".ber"
 
 typedef struct s_player
 {
-	size_t				init_x;
-	size_t				init_y;
-	size_t				score;
+	int32_t				init_x;
+	int32_t				init_y;
+	int32_t				score;
 	int					moves;
 	mlx_image_t			*img;
 	int					x;
@@ -49,31 +48,31 @@ typedef struct s_player
 
 typedef struct s_enemy
 {
-	size_t				x;
-	size_t				y;
+	int32_t				x;
+	int32_t				y;
 	mlx_image_t			*img;
 }						t_enemy;
 
 typedef struct s_exit
 {
-	size_t				x;
-	size_t				y;
+	int32_t				x;
+	int32_t				y;
 	mlx_image_t			*img;
 	t_bool				open;
 }						t_exit;
 
 typedef struct s_collectible
 {
-	size_t				x;
-	size_t				y;
+	int32_t				x;
+	int32_t				y;
 	mlx_image_t			*img;
 }						t_collectible;
 
 // // struct for walls, floor, etc
 typedef struct s_tile
 {
-	size_t				x;
-	size_t				y;
+	int32_t				x;
+	int32_t				y;
 	mlx_image_t			*img;
 	char				type;
 }						t_tile;
@@ -81,25 +80,25 @@ typedef struct s_tile
 typedef struct s_tileset
 {
 	t_tile				**tiles;
-	size_t				n_tiles;
+	int32_t				n_tiles;
 }						t_tileset;
 
 typedef struct s_collectibles
 {
-	size_t				n_collectibles;
+	int32_t				n_collectibles;
 	t_collectible		**collectibles;
 }						t_collectibles;
 
 typedef struct s_enemies
 {
-	size_t				n_enemies;
+	int32_t				n_enemies;
 	t_enemy				**enemies;
 }						t_enemies;
 
 typedef struct s_map
 {
-	size_t				width;
-	size_t				height;
+	int32_t				width;
+	int32_t				height;
 	char				**layout;
 }						t_map;
 
@@ -109,6 +108,8 @@ typedef struct s_textures
 	mlx_texture_t		*wall;
 	mlx_texture_t		*floor;
 	mlx_texture_t		*collectible;
+	mlx_texture_t		*exit_open;
+	mlx_texture_t		*exit_closed;
 }						t_textures;
 
 typedef struct s_game
@@ -127,51 +128,55 @@ typedef struct s_game
 
 }						t_game;
 
-typedef struct s_validate_map
+typedef struct s_map_info
 {
 	t_bool				player;
 	t_bool				exit;
 	t_bool				collectible;
-}						t_validate_map;
+}						t_map_info;
 
 // Disjoint Set
 
 typedef struct s_dis_item
 {
 	struct s_dis_item	*parent;
-	size_t				x;
-	size_t				y;
+	int32_t				x;
+	int32_t				y;
 }						t_dis_item;
 
 typedef struct s_dis_set
 {
 	t_dis_item			**items;
-	size_t				size;
+	int32_t				size;
 }						t_dis_set;
 
 void					ft_error(char *msg);
 
 // ALLOC STRUCTS
 t_bool					alloc_map(t_game *game);
-t_bool					alloc_tileset(t_game *game);
-t_bool					alloc_collectibles(t_game *game, size_t n_collectibles);
+
+// COLLECTIBLES
+t_bool					init_collectibles(t_game *game);
+t_bool					render_collectibles(t_game *game);
+void					collect_collectible(t_game *game, int32_t x, int32_t y);
+t_bool					all_collected(t_game *game);
 
 // INIT STRUCTS
 t_bool					init_game(t_game **game);
 t_bool					init_map(t_game *game, char **file_path);
 t_bool					init_tileset(t_game *game);
-t_bool					init_collectibles(t_game *game);
 t_bool					init_player(t_game *game);
-void					init_validate_map(t_validate_map *validate_map);
-void					init_validate_map(t_validate_map *validate_map);
+void					init_map_info(t_map_info *validate_map);
 t_bool					init_exit(t_game *game);
 
 // RENDER
 t_bool					render_tileset(t_game *game);
-t_bool					render_collectibles(t_game *game);
 t_bool					render_player(t_game *game);
 t_bool					render_closed_exit(t_game *game);
 t_bool					open_exit(t_game *game);
+
+// TEXT MOVES
+t_bool					update_moves_string(t_game *game);
 
 // TEXTURES
 t_bool					load_textures(t_game *game);
@@ -180,7 +185,12 @@ t_bool					check_arguments(int argc, char **argv);
 
 // MAP PARSING
 t_bool					check_line(t_game *game, char *line,
-							t_validate_map *validate_map);
+							t_map_info *validate_map);
+
+// TILESET
+t_bool					is_floor_tile(int32_t x, int32_t y, t_game *game);
+t_bool					is_collectible_tile(int32_t x, int32_t y, t_game *game);
+t_bool					is_exit_tile(int32_t x, int32_t y, t_game *game);
 
 // MLX
 t_bool					init_mlx(t_game *game);
@@ -191,21 +201,21 @@ t_bool					ft_player_move(t_game *game);
 void					print_layout(t_game *game);
 
 // MAP VALIDATION
-t_bool					valid_map(t_game *game, t_validate_map *validate_map);
+t_bool					valid_map(t_game *game, t_map_info *validate_map);
 t_bool					check_border(t_game *game);
-t_bool					valid_n_items(t_validate_map *validate_map);
+t_bool					valid_n_items(t_map_info *validate_map);
 t_bool					find_valid_path(t_game *game);
 
 // DISJOINT SET
-t_bool					alloc_dis_item(t_dis_item **dis_item, size_t x,
-							size_t y);
+t_bool					alloc_dis_item(t_dis_item **dis_item, int32_t x,
+							int32_t y);
 t_bool					alloc_dis_set_items(t_dis_set **dis_set, t_game *game);
 t_bool					alloc_dis_set(t_dis_set **dis_set, t_game *game);
-size_t					get_dis_set_size(t_game *game);
+int32_t					get_dis_set_size(t_game *game);
 t_dis_item				*find_dis_item(t_dis_item *item);
-t_dis_item				*get_dis_item(t_dis_set *dis_set, size_t x, size_t y);
+t_dis_item				*get_dis_item(t_dis_set *dis_set, int32_t x, int32_t y);
 void					union_dis_items(t_dis_item *item1, t_dis_item *item2);
 
-void					end_game(t_game *game);
+void					end_game(t_game *game, t_bool success);
 
 #endif

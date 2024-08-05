@@ -4,12 +4,12 @@
 t_bool	find_valid_path(t_game *game)
 {
 	t_dis_set	*dis_set;
-	size_t		y;
-	size_t		x;
+	int32_t		y;
+	int32_t		x;
 	const int	directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 	int			i;
-	size_t		new_x;
-	size_t		new_y;
+	int32_t		new_x;
+	int32_t		new_y;
 	t_dis_item	*root;
 
 	if (!alloc_dis_set(&dis_set, game))
@@ -68,9 +68,9 @@ t_bool	find_valid_path(t_game *game)
 	return (TRUE);
 }
 
-t_bool	valid_map(t_game *game, t_validate_map *validate_map)
+t_bool	valid_map(t_game *game, t_map_info *map_info)
 {
-	if (!valid_n_items(validate_map))
+	if (!valid_n_items(map_info))
 		return (FALSE);
 	if (!check_border(game))
 		return (FALSE);

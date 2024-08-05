@@ -2,7 +2,7 @@
 
 t_bool	render_collectibles(t_game *game)
 {
-	size_t	i;
+	int32_t	i;
 
 	i = 0;
 	while (i < game->collectibles->n_collectibles)

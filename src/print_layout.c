@@ -2,8 +2,8 @@
 
 void	print_layout(t_game *game)
 {
-	size_t	y;
-	size_t	x;
+	int32_t	y;
+	int32_t	x;
 
 	y = 0;
 	while (y < game->map->height)

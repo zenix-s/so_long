@@ -1,10 +1,10 @@
 #include "../../../include/so_long.h"
 
-size_t	get_dis_set_size(t_game *game)
+int32_t	get_dis_set_size(t_game *game)
 {
-	size_t	size;
-	size_t	y;
-	size_t	x;
+	int32_t	size;
+	int32_t	y;
+	int32_t	x;
 
 	size = 0;
 	y = 0;
@@ -52,9 +52,9 @@ void	union_dis_items(t_dis_item *item1, t_dis_item *item2)
 		root2->parent = root1;
 }
 
-t_dis_item	*get_dis_item(t_dis_set *dis_set, size_t x, size_t y)
+t_dis_item	*get_dis_item(t_dis_set *dis_set, int32_t x, int32_t y)
 {
-	size_t	i;
+	int32_t	i;
 
 	i = 0;
 	while (i < dis_set->size)

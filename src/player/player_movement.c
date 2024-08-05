@@ -1,77 +1,35 @@
 #include "../../include/so_long.h"
 
-t_bool	is_walkable_tile(size_t new_x, size_t new_y, t_game *game)
+t_bool	is_key_up(t_game *game)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < (game->tileset->n_tiles))
-	{
-		if (game->tileset->tiles[i] == NULL)
-		{
-			i++;
-			continue ;
-		}
-		if (game->tileset->tiles[i]->x == new_x
-			&& game->tileset->tiles[i]->y == new_y)
-		{
-			if (game->tileset->tiles[i]->type == '1')
-				return (FALSE);
-			return (TRUE);
-		}
-		i++;
-	}
-	return (FALSE);
-}
-
-t_bool	is_collectible_tile(size_t new_x, size_t new_y, t_game *game)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < (game->collectibles->n_collectibles))
-	{
-		if (game->collectibles->collectibles[i]->x == new_x / TILE_SIZE
-			&& game->collectibles->collectibles[i]->y == new_y / TILE_SIZE)
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}
-
-t_bool	is_exit_tile(size_t new_x, size_t new_y, t_game *game)
-{
-	if ((game->exit->x * TILE_SIZE) == new_x && (game->exit->y
-			* TILE_SIZE) == new_y)
+	if (mlx_is_key_down(game->mlx, MLX_KEY_UP) || mlx_is_key_down(game->mlx,
+			MLX_KEY_W))
 		return (TRUE);
 	return (FALSE);
 }
 
-void	collect_collectible(t_game *game, size_t new_x, size_t new_y)
+t_bool	is_key_down(t_game *game)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < (game->collectibles->n_collectibles))
-	{
-		if (game->collectibles->collectibles[i]->x == new_x / TILE_SIZE
-			&& game->collectibles->collectibles[i]->y == new_y / TILE_SIZE)
-		{
-			game->collectibles->collectibles[i]->x = -1;
-			game->collectibles->collectibles[i]->y = -1;
-			mlx_delete_image(game->mlx,
-				game->collectibles->collectibles[i]->img);
-			game->collectibles->collectibles[i]->img = NULL;
-			return ;
-		}
-		i++;
-	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN) || mlx_is_key_down(game->mlx,
+			MLX_KEY_S))
+		return (TRUE);
+	return (FALSE);
 }
 
-void	update_player_position(int new_x, int new_y, t_game *game)
+t_bool	is_key_right(t_game *game)
 {
-	game->player->img->instances[0].x = new_x;
-	game->player->img->instances[0].y = new_y;
+	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT) || mlx_is_key_down(game->mlx,
+			MLX_KEY_D))
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool	is_key_left(t_game *game)
+{
+	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT) || mlx_is_key_down(game->mlx,
+			MLX_KEY_A))
+		return (TRUE);
+	return (FALSE);
 }
 
 t_bool	ft_player_move(t_game *game)
@@ -81,35 +39,28 @@ t_bool	ft_player_move(t_game *game)
 
 	new_x = game->player->img->instances[0].x;
 	new_y = game->player->img->instances[0].y;
-	// if (direction == 'u')
-	if (mlx_is_key_down(game->mlx, MLX_KEY_UP))
-		new_y -= CHARACTER_DISTANCE;
-	else if (mlx_is_key_down(game->mlx, MLX_KEY_DOWN))
-		new_y += CHARACTER_DISTANCE;
-	else if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
-		new_x -= CHARACTER_DISTANCE;
-	else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
-		new_x += CHARACTER_DISTANCE;
+	if (is_key_up(game))
+		new_y -= TILE_SIZE;
+	else if (is_key_down(game))
+		new_y += TILE_SIZE;
+	else if (is_key_left(game))
+		new_x -= TILE_SIZE;
+	else if (is_key_right(game))
+		new_x += TILE_SIZE;
 	else
 		return (FALSE);
-	if (is_walkable_tile(new_x, new_y, game))
+	if (is_floor_tile(new_x / TILE_SIZE, new_y / TILE_SIZE, game))
 	{
 		game->player->moves++;
-		if (is_collectible_tile(new_x, new_y, game))
+		if (is_collectible_tile(new_x / TILE_SIZE, new_y / TILE_SIZE, game))
+			collect_collectible(game, new_x / TILE_SIZE, new_y / TILE_SIZE);
+		if (is_exit_tile(new_x / TILE_SIZE, new_y / TILE_SIZE, game))
 		{
-			ft_printf("Player collected a collectible!\n");
-			game->player->score++;
-			collect_collectible(game, new_x, new_y);
+			if (all_collected(game))
+				end_game(game, TRUE);
 		}
-		if (is_exit_tile(new_x, new_y, game))
-		{
-			ft_printf("Player reached the exit!\n");
-			if (game->player->score == game->collectibles->n_collectibles)
-				end_game(game);
-			else
-				return (FALSE);
-		}
-		update_player_position(new_x, new_y, game);
+		game->player->img->instances[0].x = new_x;
+		game->player->img->instances[0].y = new_y;
 		return (TRUE);
 	}
 	return (FALSE);

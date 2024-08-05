@@ -1,6 +1,6 @@
 #include "../../../include/so_long.h"
 
-t_bool	alloc_dis_item(t_dis_item **dis_item, size_t x, size_t y)
+t_bool	alloc_dis_item(t_dis_item **dis_item, int32_t x, int32_t y)
 {
 	*dis_item = malloc(sizeof(t_dis_item));
 	if (*dis_item == NULL)
@@ -15,9 +15,9 @@ t_bool	alloc_dis_item(t_dis_item **dis_item, size_t x, size_t y)
 
 t_bool	alloc_dis_set_items(t_dis_set **dis_set, t_game *game)
 {
-	size_t	i;
-	size_t	y;
-	size_t	x;
+	int32_t	i;
+	int32_t	y;
+	int32_t	x;
 
 	i = 0;
 	y = 0;
@@ -43,7 +43,7 @@ t_bool	alloc_dis_set_items(t_dis_set **dis_set, t_game *game)
 
 t_bool	alloc_dis_set(t_dis_set **dis_set, t_game *game)
 {
-	size_t	size;
+	int32_t	size;
 
 	size = get_dis_set_size(game);
 	*dis_set = malloc(sizeof(t_dis_set));

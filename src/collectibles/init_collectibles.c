@@ -1,10 +1,23 @@
 #include "../../include/so_long.h"
 
-static size_t	get_number_collectibles(t_game *game)
+static t_bool	alloc_collectibles(t_game *game, int32_t n_collectibles)
 {
-	size_t	x;
-	size_t	y;
-	size_t	n_collectibles;
+	game->collectibles = (t_collectibles *)malloc(sizeof(t_collectibles));
+	if (game->collectibles == NULL)
+		return (ft_error("Failed to allocate memory for collectibles"), FALSE);
+	game->collectibles->collectibles = (t_collectible **)malloc(sizeof(t_collectible *)
+			* n_collectibles);
+	if (game->collectibles->collectibles == NULL)
+		return (ft_error("Failed to allocate memory for collectibles"), FALSE);
+	game->collectibles->n_collectibles = n_collectibles;
+	return (TRUE);
+}
+
+static int32_t	get_number_collectibles(t_game *game)
+{
+	int32_t	x;
+	int32_t	y;
+	int32_t	n_collectibles;
 
 	n_collectibles = 0;
 	y = 0;
@@ -22,14 +35,11 @@ static size_t	get_number_collectibles(t_game *game)
 	return (n_collectibles);
 }
 
-t_bool	init_collectible(t_collectible **collectible, size_t x, size_t y)
+t_bool	init_collectible(t_collectible **collectible, int32_t x, int32_t y)
 {
 	*collectible = (t_collectible *)malloc(sizeof(t_collectible));
 	if (*collectible == NULL)
 		return (ft_error("Failed to allocate memory for collectible"), FALSE);
-	// (*collectible)->img = mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
-	// if ((*collectible)->img == NULL)
-	// 	return (ft_error("Failed to create image for collectible"), FALSE);
 	(*collectible)->x = x;
 	(*collectible)->y = y;
 	return (TRUE);
@@ -37,9 +47,9 @@ t_bool	init_collectible(t_collectible **collectible, size_t x, size_t y)
 
 t_bool	init_collectibles(t_game *game)
 {
-	size_t	x;
-	size_t	y;
-	size_t	i;
+	int32_t	x;
+	int32_t	y;
+	int32_t	i;
 
 	if (!alloc_collectibles(game, get_number_collectibles(game)))
 		return (FALSE);

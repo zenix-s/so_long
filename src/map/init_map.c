@@ -10,7 +10,7 @@
 t_bool	alloc_layout(t_game *game, char **line)
 {
 	char	**new_layout;
-	size_t	i;
+	int32_t	i;
 
 	new_layout = (char **)malloc(sizeof(char *) * (game->map->height + 1));
 	if (new_layout == NULL)
@@ -30,28 +30,28 @@ t_bool	alloc_layout(t_game *game, char **line)
 
 t_bool	init_map(t_game *game, char **file_path)
 {
-	int				fd;
-	char			*line;
-	t_validate_map	validate_map;
+	int			fd;
+	char		*line;
+	t_map_info	map_info;
 
 	if (!alloc_map(game))
 		return (ft_error("Failed to allocate memory\n"), FALSE);
 	fd = open(file_path[1], O_RDONLY);
 	if (fd <= 1)
 		return (ft_error("Failed to open map file\n"), FALSE);
-	init_validate_map(&validate_map);
+	init_map_info(&map_info);
 	game->map->height = 0;
 	line = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (!check_line(game, line, &validate_map))
+		if (!check_line(game, line, &map_info))
 			return (FALSE);
 		if (!alloc_layout(game, &line))
 			return (FALSE);
 		game->map->height++;
 	}
 	close(fd);
-	if (!valid_map(game, &validate_map))
+	if (!valid_map(game, &map_info))
 		return (FALSE);
 	return (TRUE);
 }

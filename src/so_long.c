@@ -1,22 +1,5 @@
 #include "../include/so_long.h"
 
-t_bool	update_moves_string(t_game *game)
-{
-	char	*moves_str;
-
-	if (game->movement != NULL)
-		mlx_delete_image(game->mlx, game->movement);
-	moves_str = ft_strjoin("Moves: ", ft_itoa(game->player->moves));
-	if (moves_str == NULL)
-	{
-		ft_error("Failed to allocate memory for moves string");
-		return (FALSE);
-	}
-	game->movement = mlx_put_string(game->mlx, (const char *)moves_str, 10, 10);
-	free(moves_str);
-	return (TRUE);
-}
-
 void	ft_player_hook(t_game *game)
 {
 	double	current_time;
@@ -29,7 +12,7 @@ void	ft_player_hook(t_game *game)
 	delta_time = current_time - game->last_time;
 	game->last_time = current_time;
 	game->time_accumulated += delta_time;
-	time_per_move = CHARACTER_DISTANCE / CHARACTER_SPEED;
+	time_per_move = TILE_SIZE / CHARACTER_SPEED;
 	if (game->time_accumulated >= time_per_move)
 	{
 		if (ft_player_move(game))
@@ -42,15 +25,6 @@ void	ft_player_hook(t_game *game)
 	}
 }
 
-void	check_all_collectibles(t_game *game)
-{
-	if (game->player->score == game->collectibles->n_collectibles && game->exit->open == FALSE)
-	{
-		ft_printf("All collectiblees rendering exit door\n");
-		(open_exit(game));
-	}
-}
-
 // HOOK
 static void	ft_hook(void *param)
 {
@@ -58,15 +32,9 @@ static void	ft_hook(void *param)
 
 	game = (t_game *)param;
 	ft_player_hook(game);
-	check_all_collectibles(game);
-}
-
-void	keyhook(mlx_key_data_t keydata, void *param)
-{
-	t_game	*game;
-
-	game = (t_game *)param;
-	if (keydata.key == MLX_KEY_ESCAPE)
+	if (all_collected(game) && game->exit->open == FALSE)
+		open_exit(game);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(game->mlx);
 }
 
@@ -91,20 +59,18 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (!init_collectibles(game))
 		return (EXIT_FAILURE);
-	if (!init_player(game))
-		return (EXIT_FAILURE);
 	if (!init_exit(game))
+		return (EXIT_FAILURE);
+	if (!init_player(game))
 		return (EXIT_FAILURE);
 	print_layout(game);
 	render_tileset(game);
 	render_collectibles(game);
-	render_player(game);
 	render_closed_exit(game);
+	render_player(game);
 	update_moves_string(game);
 	mlx_loop_hook(game->mlx, ft_hook, game);
-	mlx_key_hook(game->mlx, &keyhook, game);
 	mlx_loop(game->mlx);
-	mlx_terminate(game->mlx);
-	free(game);
+	end_game(game, TRUE);
 	return (EXIT_SUCCESS);
 }

@@ -1,18 +1,18 @@
 #include "../../include/so_long.h"
 
-t_bool	found_player(t_validate_map *validate_map)
+t_bool	found_player(t_map_info *map_info)
 {
-	if (validate_map->player)
+	if (map_info->player)
 		return (ft_error("Player must appear exactly once"), TRUE);
-	validate_map->player = TRUE;
+	map_info->player = TRUE;
 	return (FALSE);
 }
 
-t_bool	found_exit(t_validate_map *validate_map)
+t_bool	found_exit(t_map_info *map_info)
 {
-	if (validate_map->exit)
+	if (map_info->exit)
 		return (ft_error("Exit must appear exactly once"), TRUE);
-	validate_map->exit = TRUE;
+	map_info->exit = TRUE;
 	return (FALSE);
 }
 
@@ -22,9 +22,9 @@ static t_bool	is_valid_char(char c)
 		|| c == '\n');
 }
 
-static size_t	line_len(char *line)
+static int32_t	line_len(char *line)
 {
-	size_t	len;
+	int32_t	len;
 
 	len = 0;
 	while (line[len] != '\0' && line[len] != '\n')
@@ -32,9 +32,9 @@ static size_t	line_len(char *line)
 	return (len);
 }
 
-t_bool	check_line(t_game *game, char *line, t_validate_map *validate_map)
+t_bool	check_line(t_game *game, char *line, t_map_info *map_info)
 {
-	size_t	i;
+	int32_t	i;
 
 	if (game->map->height == 0)
 	{
@@ -49,12 +49,12 @@ t_bool	check_line(t_game *game, char *line, t_validate_map *validate_map)
 	{
 		if (!is_valid_char(line[i]))
 			return (ft_error("Invalid map file"), FALSE);
-		if (line[i] == 'P' && found_player(validate_map))
+		if (line[i] == 'P' && found_player(map_info))
 			return (FALSE);
-		else if (line[i] == 'E' && found_exit(validate_map))
+		else if (line[i] == 'E' && found_exit(map_info))
 			return (FALSE);
 		else if (line[i] == 'C')
-			validate_map->collectible = TRUE;
+			map_info->collectible = TRUE;
 		i++;
 	}
 	return (TRUE);

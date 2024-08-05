@@ -2,7 +2,7 @@
 
 t_bool	render_tileset(t_game *game)
 {
-	size_t	i;
+	int32_t	i;
 
 	i = 0;
 	while (i < game->tileset->n_tiles)
@@ -14,7 +14,8 @@ t_bool	render_tileset(t_game *game)
 			game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 					game->textures->wall);
 		mlx_image_to_window(game->mlx, game->tileset->tiles[i]->img,
-			game->tileset->tiles[i]->x, game->tileset->tiles[i]->y);
+			game->tileset->tiles[i]->x * TILE_SIZE, game->tileset->tiles[i]->y
+			* TILE_SIZE);
 		i++;
 	}
 	return (TRUE);
