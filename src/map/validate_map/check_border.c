@@ -14,12 +14,12 @@ t_bool	check_border(t_game *game)
 			if (y == 0 || y == game->map->height - 1)
 			{
 				if (game->map->layout[y][x] != '1')
-					return (ft_error("Invalid map file"), FALSE);
+					return (ft_error("Invalid map file_1"), FALSE);
 			}
 			else if (x == 0 || x == game->map->width - 1)
 			{
 				if (game->map->layout[y][x] != '1')
-					return (ft_error("Invalid map file"), FALSE);
+					return (ft_error("Invalid map file_2"), FALSE);
 			}
 			x++;
 		}

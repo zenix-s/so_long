@@ -15,10 +15,11 @@ t_bool	init_game(t_game **game)
 	(*game)->tileset = NULL;
 	(*game)->collectibles = NULL;
 	(*game)->player = NULL;
-	(*game)->last_time = 0.0;
-	(*game)->time_accumulated = 0.0;
 	(*game)->exit = NULL;
 	(*game)->movement = NULL;
 	(*game)->textures = NULL;
+	(*game)->time_accumulated = 0.0;
+	(*game)->last_time = 0.0;
+	(*game)->rand_seed = 123456789;
 	return (TRUE);
 }

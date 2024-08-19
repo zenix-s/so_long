@@ -22,6 +22,9 @@ void	free_collectibles(t_game *game)
 	{
 		if (game->collectibles->collectibles[i] != NULL)
 		{
+			if (game->collectibles->collectibles[i]->img != NULL)
+				mlx_delete_image(game->mlx,
+					game->collectibles->collectibles[i]->img);
 			free(game->collectibles->collectibles[i]);
 		}
 		i++;

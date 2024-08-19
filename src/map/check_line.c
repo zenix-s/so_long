@@ -40,15 +40,15 @@ t_bool	check_line(t_game *game, char *line, t_map_info *map_info)
 	{
 		game->map->width = line_len(line);
 		if (game->map->width <= 2)
-			return (ft_error("Invalid map file"), FALSE);
+			return (ft_error("Invalid map file_2"), FALSE);
 	}
 	else if (game->map->width != line_len(line))
-		return (ft_error("Invalid map file"), FALSE);
+		return (ft_error("Invalid map file_3"), FALSE);
 	i = 0;
 	while (line[i])
 	{
 		if (!is_valid_char(line[i]))
-			return (ft_error("Invalid map file"), FALSE);
+			return (ft_error("Invalid map file_4"), FALSE);
 		if (line[i] == 'P' && found_player(map_info))
 			return (FALSE);
 		else if (line[i] == 'E' && found_exit(map_info))

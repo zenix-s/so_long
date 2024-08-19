@@ -5,6 +5,26 @@ t_bool	alloc_player(t_game *game)
 	game->player = (t_player *)malloc(sizeof(t_player));
 	if (game->player == NULL)
 		return (ft_error("Failed to allocate memory for player"), FALSE);
+	game->player->textures = (t_player_texture *)malloc(sizeof(t_player_texture));
+	if (game->player->textures == NULL)
+		return (ft_error("Failed to allocate memory for player"), FALSE);
+	return (TRUE);
+}
+
+t_bool	load_player_textures(t_game *game)
+{
+	game->player->textures->player = mlx_load_png("textures/player.png");
+	if (game->player->textures->player == NULL)
+		return (ft_error("Failed to load player texture"), FALSE);
+	game->player->textures->player_1 = mlx_load_png("textures/player_1.png");
+	if (game->player->textures->player_1 == NULL)
+		return (ft_error("Failed to load player texture"), FALSE);
+	game->player->textures->player_2 = mlx_load_png("textures/player_2.png");
+	if (game->player->textures->player_2 == NULL)
+		return (ft_error("Failed to load player texture"), FALSE);
+	game->player->textures->player_3 = mlx_load_png("textures/player_3.png");
+	if (game->player->textures->player_3 == NULL)
+		return (ft_error("Failed to load player texture"), FALSE);
 	return (TRUE);
 }
 
@@ -40,9 +60,13 @@ t_bool	init_player(t_game *game)
 		return (FALSE);
 	if (!find_player(game, &x, &y))
 		return (ft_error("Player starting position not found"), FALSE);
-	game->player->target_x = x;
-	game->player->target_y = y;
+	if (!load_player_textures(game))
+		return (FALSE);
+	game->player->x = x;
+	game->player->y = y;
 	game->player->moves = 0;
 	game->player->score = 0;
+	game->player->animation = 0;
+	game->player->player_time = 0.0;
 	return (TRUE);
 }

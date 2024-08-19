@@ -10,6 +10,10 @@ static t_bool	alloc_collectibles(t_game *game, int32_t n_collectibles)
 	if (game->collectibles->collectibles == NULL)
 		return (ft_error("Failed to allocate memory for collectibles"), FALSE);
 	game->collectibles->n_collectibles = n_collectibles;
+	game->collectibles->textures = (t_collectible_texture *)malloc(sizeof(t_collectible_texture));
+	if (game->collectibles->textures == NULL)
+		return (ft_error("Failed to allocate memory for collectibles textures"),
+			FALSE);
 	return (TRUE);
 }
 
@@ -42,6 +46,18 @@ t_bool	init_collectible(t_collectible **collectible, int32_t x, int32_t y)
 		return (ft_error("Failed to allocate memory for collectible"), FALSE);
 	(*collectible)->x = x;
 	(*collectible)->y = y;
+	(*collectible)->collected = FALSE;
+	return (TRUE);
+}
+
+t_bool	load_collectibles_textures(t_game *game)
+{
+	game->collectibles->textures->collectible = mlx_load_png("textures/collectible.png");
+	if (game->collectibles->textures->collectible == NULL)
+		return (ft_error("Failed to load collectible texture"), FALSE);
+	game->collectibles->textures->collectible_open = mlx_load_png("textures/collectible_open.png");
+	if (game->collectibles->textures->collectible_open == NULL)
+		return (ft_error("Failed to load collectible_open texture"), FALSE);
 	return (TRUE);
 }
 
@@ -52,6 +68,8 @@ t_bool	init_collectibles(t_game *game)
 	int32_t	i;
 
 	if (!alloc_collectibles(game, get_number_collectibles(game)))
+		return (FALSE);
+	if (!load_collectibles_textures(game))
 		return (FALSE);
 	i = 0;
 	y = -1;

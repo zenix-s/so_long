@@ -61,6 +61,8 @@ t_bool	ft_player_move(t_game *game)
 		}
 		game->player->img->instances[0].x = new_x;
 		game->player->img->instances[0].y = new_y;
+		game->player->x = new_x / TILE_SIZE;
+		game->player->y = new_y / TILE_SIZE;
 		return (TRUE);
 	}
 	return (FALSE);

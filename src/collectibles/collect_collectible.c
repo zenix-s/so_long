@@ -9,12 +9,20 @@ void	collect_collectible(t_game *game, int32_t x, int32_t y)
 	{
 		if (game->collectibles->collectibles[i]->x == x
 			&& game->collectibles->collectibles[i]->y == y
-			&& game->collectibles->collectibles[i]->img != NULL)
+			&& game->collectibles->collectibles[i]->collected == FALSE)
 		{
+			game->collectibles->collectibles[i]->collected = TRUE;
+			game->player->score++;
 			mlx_delete_image(game->mlx,
 				game->collectibles->collectibles[i]->img);
-			game->collectibles->collectibles[i]->img = NULL;
-			game->player->score++;
+			game->collectibles->collectibles[i]->img = mlx_texture_to_image(game->mlx,
+					game->collectibles->textures->collectible_open);
+			mlx_image_to_window(game->mlx,
+				game->collectibles->collectibles[i]->img,
+				game->collectibles->collectibles[i]->x * TILE_SIZE,
+				game->collectibles->collectibles[i]->y * TILE_SIZE);
+			mlx_set_instance_depth(game->collectibles->collectibles[i]->img->instances,
+				2);
 			return ;
 		}
 		i++;

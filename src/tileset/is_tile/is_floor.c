@@ -2,19 +2,8 @@
 
 t_bool	is_floor_tile(int32_t x, int32_t y, t_game *game)
 {
-	int32_t	i;
-
-	i = -1;
-	while (++i < (game->tileset->n_tiles))
-	{
-		if (game->tileset->tiles[i] == NULL)
-			continue ;
-		if (game->tileset->tiles[i]->x == x && game->tileset->tiles[i]->y == y)
-		{
-			if (game->tileset->tiles[i]->type == '1')
-				return (FALSE);
-			return (TRUE);
-		}
-	}
+	if (game->map->layout[y][x] == '0' || game->map->layout[y][x] == 'C'
+		|| game->map->layout[y][x] == 'E' || game->map->layout[y][x] == 'P')
+		return (TRUE);
 	return (FALSE);
 }

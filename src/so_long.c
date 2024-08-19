@@ -12,6 +12,7 @@ void	ft_player_hook(t_game *game)
 	delta_time = current_time - game->last_time;
 	game->last_time = current_time;
 	game->time_accumulated += delta_time;
+	game->player->player_time += delta_time;
 	time_per_move = TILE_SIZE / CHARACTER_SPEED;
 	if (game->time_accumulated >= time_per_move)
 	{
@@ -22,6 +23,29 @@ void	ft_player_hook(t_game *game)
 			update_moves_string(game);
 			game->time_accumulated = 0;
 		}
+	}
+	if (game->player->player_time >= 0.25)
+	{
+		game->player->animation += 1;
+		if (game->player->animation >= 4)
+			game->player->animation = 0;
+		// game->player->img
+		mlx_delete_image(game->mlx, game->player->img);
+		if (game->player->animation == 0)
+			game->player->img = mlx_texture_to_image(game->mlx,
+					game->player->textures->player);
+		else if (game->player->animation == 1)
+			game->player->img = mlx_texture_to_image(game->mlx,
+					game->player->textures->player_1);
+		else if (game->player->animation == 2)
+			game->player->img = mlx_texture_to_image(game->mlx,
+					game->player->textures->player_2);
+		else if (game->player->animation == 3)
+			game->player->img = mlx_texture_to_image(game->mlx,
+					game->player->textures->player_3);
+		mlx_image_to_window(game->mlx, game->player->img, game->player->x
+			* TILE_SIZE, game->player->y * TILE_SIZE);
+		game->player->player_time = 0;
 	}
 }
 
@@ -48,8 +72,6 @@ int	main(int argc, char **argv)
 	if (!check_arguments(argc, argv))
 		return (EXIT_FAILURE);
 	if (!init_game(&game))
-		return (EXIT_FAILURE);
-	if (!load_textures(game))
 		return (EXIT_FAILURE);
 	if (!init_map(game, argv))
 		return (EXIT_FAILURE);
