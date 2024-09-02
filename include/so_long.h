@@ -192,9 +192,6 @@ typedef struct s_dis_set
 
 void						ft_error(char *msg);
 
-// ALLOC STRUCTS
-t_bool						alloc_map(t_game *game);
-
 // COLLECTIBLES
 t_bool						init_collectibles(t_game *game);
 t_bool						render_collectibles(t_game *game);
@@ -230,6 +227,8 @@ t_bool						is_floor_tile(int32_t x, int32_t y, t_game *game);
 t_bool						is_collectible_tile(int32_t x, int32_t y,
 								t_game *game);
 t_bool						is_exit_tile(int32_t x, int32_t y, t_game *game);
+t_bool						is_special_tile(int32_t x, int32_t y, t_game *game);
+t_bool						is_wall_tile(int32_t x, int32_t y, t_game *game);
 
 // MLX
 t_bool						init_mlx(t_game *game);
@@ -257,6 +256,7 @@ t_dis_item					*get_dis_item(t_dis_set *dis_set, int32_t x,
 								int32_t y);
 void						union_dis_items(t_dis_item *item1,
 								t_dis_item *item2);
+void						free_dis_set(t_dis_set *dis_set);
 
 void						end_game(t_game *game, t_bool success);
 unsigned int				gen_rand(unsigned int min, unsigned int max,

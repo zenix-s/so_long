@@ -5,10 +5,7 @@ t_bool	init_game(t_game **game)
 {
 	*game = (t_game *)malloc(sizeof(t_game));
 	if (*game == NULL)
-	{
-		ft_error("Failed to allocate memory for game\n");
-		return (FALSE);
-	}
+		return (ft_error("Failed to allocate memory for game\n"), FALSE);
 	(*game)->mlx = NULL;
 	(*game)->map = NULL;
 	(*game)->enemies = NULL;

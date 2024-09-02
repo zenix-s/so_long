@@ -2,23 +2,7 @@
 
 int32_t	get_dis_set_size(t_game *game)
 {
-	int32_t	size;
-	int32_t	y;
-	int32_t	x;
-
-	size = 0;
-	y = 0;
-	while (y < game->map->height)
-	{
-		x = -1;
-		while (++x < game->map->width)
-		{
-			if (game->map->layout[y][x] != '1')
-				size++;
-		}
-		y++;
-	}
-	return (size);
+	return (game->map->height * game->map->width);
 }
 
 /**
@@ -32,10 +16,8 @@ t_dis_item	*find_dis_item(t_dis_item *item)
 	t_dis_item	*root;
 
 	root = item;
-	// Find the root of the set
 	while (root->parent != root)
 		root = root->parent;
-	// Optimize the path to the root
 	while (item->parent != root)
 		item->parent = root;
 	return (root);

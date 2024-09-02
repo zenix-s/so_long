@@ -50,7 +50,7 @@ void	ft_player_hook(t_game *game)
 }
 
 // HOOK
-static void	ft_hook(void *param)
+static void	ft_game_hook(void *param)
 {
 	t_game	*game;
 
@@ -64,26 +64,36 @@ static void	ft_hook(void *param)
 
 // MAIN FUNCTION
 
-int	main(int argc, char **argv)
+t_game	*init_game_struct(char **argv)
 {
 	t_game	*game;
 
 	game = NULL;
+	if (!init_game(&game))
+		return (NULL);
+	if (!init_map(game, argv))
+		return (NULL);
+	if (!init_mlx(game))
+		return (NULL);
+	if (!init_tileset(game))
+		return (NULL);
+	if (!init_collectibles(game))
+		return (NULL);
+	if (!init_exit(game))
+		return (NULL);
+	if (!init_player(game))
+		return (NULL);
+	return (game);
+}
+
+int	main(int argc, char **argv)
+{
+	t_game	*game;
+
 	if (!check_arguments(argc, argv))
 		return (EXIT_FAILURE);
-	if (!init_game(&game))
-		return (EXIT_FAILURE);
-	if (!init_map(game, argv))
-		return (EXIT_FAILURE);
-	if (!init_mlx(game))
-		return (EXIT_FAILURE);
-	if (!init_tileset(game))
-		return (EXIT_FAILURE);
-	if (!init_collectibles(game))
-		return (EXIT_FAILURE);
-	if (!init_exit(game))
-		return (EXIT_FAILURE);
-	if (!init_player(game))
+	game = init_game_struct(argv);
+	if (game == NULL)
 		return (EXIT_FAILURE);
 	print_layout(game);
 	render_tileset(game);
@@ -91,7 +101,7 @@ int	main(int argc, char **argv)
 	render_closed_exit(game);
 	render_player(game);
 	update_moves_string(game);
-	mlx_loop_hook(game->mlx, ft_hook, game);
+	mlx_loop_hook(game->mlx, ft_game_hook, game);
 	mlx_loop(game->mlx);
 	end_game(game, TRUE);
 	return (EXIT_SUCCESS);

@@ -6,6 +6,16 @@
 // 'C' must appear at least once
 // '1' must be the border of the map
 // All 'C' must be reachable from 'P'
+t_bool	alloc_map(t_game *game)
+{
+	game->map = (t_map *)malloc(sizeof(t_map));
+	if (game->map == NULL)
+		return (FALSE);
+	game->map->layout = NULL;
+	game->map->height = 0;
+	game->map->width = 0;
+	return (TRUE);
+}
 
 t_bool	alloc_layout(t_game *game, char **line)
 {
@@ -32,26 +42,27 @@ t_bool	init_map(t_game *game, char **file_path)
 {
 	int			fd;
 	char		*line;
-	t_map_info	map_info;
+	t_map_info	*map_info;
 
 	if (!alloc_map(game))
 		return (ft_error("Failed to allocate memory\n"), FALSE);
 	fd = open(file_path[1], O_RDONLY);
 	if (fd <= 1)
 		return (ft_error("Failed to open map file\n"), FALSE);
-	init_map_info(&map_info);
+	map_info = (t_map_info *)malloc(sizeof(t_map_info));
+	if (map_info == NULL)
+		return (ft_error("Failed to allocate memory\n"), FALSE);
+	init_map_info(map_info);
 	game->map->height = 0;
 	line = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (!check_line(game, line, &map_info))
-			return (FALSE);
-		if (!alloc_layout(game, &line))
-			return (FALSE);
+		if (!check_line(game, line, map_info) || !alloc_layout(game, &line))
+			return (free(line), free(map_info), FALSE);
 		game->map->height++;
 	}
 	close(fd);
-	if (!valid_map(game, &map_info))
+	if (!valid_map(game, map_info))
 		return (FALSE);
-	return (TRUE);
+	return (free(map_info), TRUE);
 }
