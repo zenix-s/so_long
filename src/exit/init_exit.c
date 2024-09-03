@@ -23,7 +23,7 @@ static void	find_exit(t_game *game)
 		x = 0;
 		while (x < game->map->width)
 		{
-			if (game->map->layout[y][x] == 'E')
+			if (is_exit_tile(x, y, game))
 			{
 				game->exit->x = x;
 				game->exit->y = y;

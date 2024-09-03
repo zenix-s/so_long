@@ -1,8 +1,8 @@
 #include "../../include/so_long.h"
-#include <stdint.h>
 
-t_bool	render_floor(t_game *game, int32_t i);
-t_bool	render_wall(t_game *game, int32_t i);
+static t_bool	render_floor(t_game *game, int32_t i);
+static t_bool	render_wall(t_game *game, int32_t i);
+
 t_bool	render_tileset(t_game *game)
 {
 	int32_t	i;
@@ -14,16 +14,17 @@ t_bool	render_tileset(t_game *game)
 			render_floor(game, i);
 		else if (game->tileset->tiles[i]->type == '1')
 			render_wall(game, i);
-		mlx_image_to_window(game->mlx, game->tileset->tiles[i]->img,
-			game->tileset->tiles[i]->x * TILE_SIZE, game->tileset->tiles[i]->y
-			* TILE_SIZE);
+		if (mlx_image_to_window(game->mlx, game->tileset->tiles[i]->img,
+				game->tileset->tiles[i]->x * TILE_SIZE,
+				game->tileset->tiles[i]->y * TILE_SIZE) == -1)
+			return (ft_error("Failed to render tile image"), FALSE);
 		mlx_set_instance_depth(game->tileset->tiles[i]->img->instances, 1);
 		i++;
 	}
 	return (TRUE);
 }
 
-t_bool	render_floor(t_game *game, int32_t i)
+static t_bool	render_floor(t_game *game, int32_t i)
 {
 	unsigned int	rand;
 
@@ -40,7 +41,7 @@ t_bool	render_floor(t_game *game, int32_t i)
 	return (TRUE);
 }
 
-t_bool	render_wall(t_game *game, int32_t i)
+static t_bool	render_wall(t_game *game, int32_t i)
 {
 	if ((game->tileset->tiles[i]->y + 1) == game->map->height)
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,

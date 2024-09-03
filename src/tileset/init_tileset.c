@@ -20,31 +20,20 @@ static t_bool	alloc_tileset(t_game *game)
 	return (TRUE);
 }
 
-static t_bool	init_tile(t_tile **tile, char type)
+static t_bool	init_tile(t_tile **tile, int32_t x, int32_t y, t_game *game)
 {
 	*tile = (t_tile *)malloc(sizeof(t_tile));
 	if (*tile == NULL)
 		return (ft_error("Failed to allocate memory for tile"), FALSE);
 	(*tile)->img = NULL;
-	(*tile)->type = type;
+	if (is_floor_tile(x, y, game))
+		(*tile)->type = '0';
+	else if (is_wall_tile(x, y, game))
+		(*tile)->type = '1';
 	return (true);
 }
 
-static t_bool	is_floor(char type)
-{
-	if (type == '0' || type == 'P' || type == 'E' || type == 'C')
-		return (true);
-	return (false);
-}
-
-static t_bool	is_wall(char type)
-{
-	if (type == '1')
-		return (true);
-	return (false);
-}
-
-t_bool	load_tile_textures(t_game *game)
+static t_bool	load_tile_textures(t_game *game)
 {
 	game->tileset->textures->wall = mlx_load_png("textures/wall.png");
 	if (game->tileset->textures->wall == NULL)
@@ -79,10 +68,8 @@ t_bool	init_tileset(t_game *game)
 		x = 0;
 		while (x < game->map->width)
 		{
-			if (is_floor(game->map->layout[y][x]))
-				init_tile(&game->tileset->tiles[y * game->map->width + x], '0');
-			else if (is_wall(game->map->layout[y][x]))
-				init_tile(&game->tileset->tiles[y * game->map->width + x], '1');
+			init_tile(&game->tileset->tiles[y * game->map->width + x], x, y,
+				game);
 			game->tileset->tiles[y * game->map->width + x]->x = x;
 			game->tileset->tiles[y * game->map->width + x]->y = y;
 			x++;

@@ -1,6 +1,6 @@
 #include "../../include/so_long.h"
 
-t_bool	alloc_player(t_game *game)
+static t_bool	alloc_player(t_game *game)
 {
 	game->player = (t_player *)malloc(sizeof(t_player));
 	if (game->player == NULL)
@@ -11,7 +11,7 @@ t_bool	alloc_player(t_game *game)
 	return (TRUE);
 }
 
-t_bool	load_player_textures(t_game *game)
+static t_bool	load_player_textures(t_game *game)
 {
 	game->player->textures->player = mlx_load_png("textures/player.png");
 	if (game->player->textures->player == NULL)
@@ -28,7 +28,7 @@ t_bool	load_player_textures(t_game *game)
 	return (TRUE);
 }
 
-t_bool	find_player(t_game *game, int32_t *x, int32_t *y)
+static t_bool	find_player(t_game *game, int32_t *x, int32_t *y)
 {
 	t_bool	player_found;
 

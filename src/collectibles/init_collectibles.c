@@ -2,11 +2,14 @@
 
 static t_bool	alloc_collectibles(t_game *game, int32_t n_collectibles)
 {
+	t_collectible	**collectibles;
+
 	game->collectibles = (t_collectibles *)malloc(sizeof(t_collectibles));
 	if (game->collectibles == NULL)
 		return (ft_error("Failed to allocate memory for collectibles"), FALSE);
-	game->collectibles->collectibles = (t_collectible **)malloc(sizeof(t_collectible *)
+	collectibles = (t_collectible **)malloc(sizeof(t_collectible *)
 			* n_collectibles);
+	game->collectibles->collectibles = collectibles;
 	if (game->collectibles->collectibles == NULL)
 		return (ft_error("Failed to allocate memory for collectibles"), FALSE);
 	game->collectibles->n_collectibles = n_collectibles;
@@ -78,7 +81,7 @@ t_bool	init_collectibles(t_game *game)
 		x = -1;
 		while (++x < game->map->width)
 		{
-			if (game->map->layout[y][x] != 'C')
+			if (!is_collectible_tile(x, y, game))
 				continue ;
 			if (!init_collectible(&game->collectibles->collectibles[i], x, y))
 				return (FALSE);
