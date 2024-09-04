@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_game.c                                         :+:      :+:    :+:   */
+/*   free_collectibles.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,21 +12,33 @@
 
 #include "../../include/so_long.h"
 
-void	end_game(t_game *game, t_bool success)
+void	free_collectibles_textures(t_game *game)
 {
-	if (game == NULL)
+	if (game->collectibles->textures != NULL)
+	{
+		mlx_delete_texture(game->collectibles->textures->collectible);
+		mlx_delete_texture(game->collectibles->textures->collectible_open);
+		free(game->collectibles->textures);
+	}
+}
+
+void	free_collectibles(t_game *game)
+{
+	int32_t	i;
+
+	if (game->collectibles == NULL)
 		return ;
-	free_exit(game);
-	free_player(game);
-	free_collectibles(game);
-	free_map(game);
-	free_tileset(game);
-	if (game->movement != NULL)
-		mlx_delete_image(game->mlx, game->movement);
-	end_mlx(game);
-	if (game != NULL)
-		free(game);
-	if (success)
-		exit(EXIT_SUCCESS);
-	exit(EXIT_FAILURE);
+	i = -1;
+	while (++i < game->collectibles->n_collectibles)
+	{
+		if (game->collectibles->collectibles[i] == NULL)
+			continue ;
+		if (game->collectibles->collectibles[i]->img != NULL)
+			mlx_delete_image(game->mlx,
+				game->collectibles->collectibles[i]->img);
+		free(game->collectibles->collectibles[i]);
+	}
+	free_collectibles_textures(game);
+	free(game->collectibles->collectibles);
+	free(game->collectibles);
 }

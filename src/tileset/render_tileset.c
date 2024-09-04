@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_tileset.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/04 14:09:06 by serferna          #+#    #+#             */
+/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/so_long.h"
 
 static t_bool	render_floor(t_game *game, int32_t i);
@@ -46,8 +58,8 @@ static t_bool	render_wall(t_game *game, int32_t i)
 	if ((game->tileset->tiles[i]->y + 1) == game->map->height)
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->wall_1);
-	else if (game->map->layout[game->tileset->tiles[i]->y
-		+ 1][game->tileset->tiles[i]->x] != '1')
+	else if (!is_wall_tile(game->tileset->tiles[i]->x,
+			game->tileset->tiles[i]->y + 1, game))
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->wall_1);
 	else

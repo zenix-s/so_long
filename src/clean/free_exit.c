@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   all_collected.c                                    :+:      :+:    :+:   */
+/*   end_game.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:00 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Created: 2024/09/04 14:07:52 by serferna          #+#    #+#             */
+/*   Updated: 2024/09/04 14:07:57 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-t_bool	all_collected(t_game *game)
+void	free_exit(t_game *game)
 {
-	if (game->player->score == game->collectibles->n_collectibles)
-		return (TRUE);
-	return (FALSE);
+	if (game->exit == NULL)
+		return ;
+	if (game->exit->img != NULL)
+		mlx_delete_image(game->mlx, game->exit->img);
+	if (game->exit->textures != NULL)
+	{
+		mlx_delete_texture(game->exit->textures->exit_open);
+		mlx_delete_texture(game->exit->textures->exit_closed);
+		free(game->exit->textures);
+	}
+	free(game->exit);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_game.c                                         :+:      :+:    :+:   */
+/*   free_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,21 +12,19 @@
 
 #include "../../include/so_long.h"
 
-void	end_game(t_game *game, t_bool success)
+void	free_player(t_game *game)
 {
-	if (game == NULL)
+	if (game->player == NULL)
 		return ;
-	free_exit(game);
-	free_player(game);
-	free_collectibles(game);
-	free_map(game);
-	free_tileset(game);
-	if (game->movement != NULL)
-		mlx_delete_image(game->mlx, game->movement);
-	end_mlx(game);
-	if (game != NULL)
-		free(game);
-	if (success)
-		exit(EXIT_SUCCESS);
-	exit(EXIT_FAILURE);
+	if (game->player->img != NULL)
+		mlx_delete_image(game->mlx, game->player->img);
+	if (game->player->textures != NULL)
+	{
+		mlx_delete_texture(game->player->textures->player);
+		mlx_delete_texture(game->player->textures->player_1);
+		mlx_delete_texture(game->player->textures->player_2);
+		mlx_delete_texture(game->player->textures->player_3);
+		free(game->player->textures);
+	}
+	free(game->player);
 }
