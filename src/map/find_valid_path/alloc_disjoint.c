@@ -4,9 +4,7 @@ t_bool	alloc_dis_item(t_dis_item **dis_item, int32_t x, int32_t y)
 {
 	*dis_item = malloc(sizeof(t_dis_item));
 	if (*dis_item == NULL)
-	{
 		return (ft_error("Failed to allocate memory for dis_item"), FALSE);
-	}
 	(*dis_item)->parent = *dis_item;
 	(*dis_item)->x = x;
 	(*dis_item)->y = y;
@@ -30,8 +28,8 @@ t_bool	alloc_dis_set_items(t_dis_set **dis_set, t_game *game)
 				continue ;
 			if (!alloc_dis_item(&(*dis_set)->items[i], x, y))
 			{
-				// Cleanup on failure
-				// TODO: Implement cleanup
+				while (--i >= 0)
+					free((*dis_set)->items[i]);
 				return (FALSE);
 			}
 			i++;
@@ -48,9 +46,7 @@ t_bool	alloc_dis_set(t_dis_set **dis_set, t_game *game)
 	size = get_dis_set_size(game);
 	*dis_set = malloc(sizeof(t_dis_set));
 	if (*dis_set == NULL)
-	{
 		return (ft_error("Failed to allocate memory for dis_set"), FALSE);
-	}
 	(*dis_set)->items = malloc(sizeof(t_dis_item *) * size);
 	if ((*dis_set)->items == NULL)
 	{
@@ -60,8 +56,8 @@ t_bool	alloc_dis_set(t_dis_set **dis_set, t_game *game)
 	(*dis_set)->size = size;
 	if (!alloc_dis_set_items(dis_set, game))
 	{
-		// Cleanup on failure
-		// TODO: Implement cleanup
+		free((*dis_set)->items);
+		free(*dis_set);
 		return (FALSE);
 	}
 	return (TRUE);

@@ -30,25 +30,20 @@ static t_bool	load_player_textures(t_game *game)
 
 static t_bool	find_player(t_game *game, int32_t *x, int32_t *y)
 {
-	t_bool	player_found;
-
-	player_found = FALSE;
 	*y = 0;
 	*x = 0;
-	while (*y < game->map->height && !player_found)
+	while (*y < game->map->height)
 	{
 		*x = 0;
-		while (*x < game->map->width && !player_found)
+		while (*x < game->map->width)
 		{
 			if (game->map->layout[*y][*x] == 'P')
-				player_found = TRUE;
-			else
-				(*x)++;
+				return (TRUE);
+			(*x)++;
 		}
-		if (!player_found)
-			(*y)++;
+		(*y)++;
 	}
-	return (player_found);
+	return (FALSE);
 }
 
 t_bool	init_player(t_game *game)

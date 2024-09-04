@@ -1,6 +1,4 @@
 #include "../../include/so_long.h"
-#include <stdint.h>
-#include <time.h>
 
 void	free_exit(t_game *game)
 {

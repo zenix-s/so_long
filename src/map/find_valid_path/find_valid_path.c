@@ -68,5 +68,6 @@ t_bool	find_valid_path(t_game *game)
 		free_dis_set(dis_set);
 		return (ft_error("Invalid map file_3"), FALSE);
 	}
+	free_dis_set(dis_set);
 	return (TRUE);
 }

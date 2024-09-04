@@ -1,11 +1,5 @@
 #include "../../include/so_long.h"
 
-// Check if the map is valid
-// Valid characters: '1', '0', 'P', 'E', 'C'
-// 'P' and 'E' must appear exactly once
-// 'C' must appear at least once
-// '1' must be the border of the map
-// All 'C' must be reachable from 'P'
 t_bool	alloc_map(t_game *game)
 {
 	game->map = (t_map *)malloc(sizeof(t_map));
