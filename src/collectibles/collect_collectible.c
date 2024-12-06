@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/collectibles/collectibles.h"
 
 void	collect_collectible(t_game *game, int32_t x, int32_t y)
 {

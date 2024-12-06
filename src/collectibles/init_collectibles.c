@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/collectibles/collectibles.h"
 
 static t_bool	alloc_collectibles(t_game *game, int32_t n_collectibles)
 {
@@ -54,7 +54,8 @@ static int32_t	get_number_collectibles(t_game *game)
 	return (n_collectibles);
 }
 
-t_bool	init_collectible(t_collectible **collectible, int32_t x, int32_t y)
+static t_bool	init_collectible(t_collectible **collectible, int32_t x,
+		int32_t y)
 {
 	*collectible = (t_collectible *)malloc(sizeof(t_collectible));
 	if (*collectible == NULL)
@@ -65,7 +66,7 @@ t_bool	init_collectible(t_collectible **collectible, int32_t x, int32_t y)
 	return (TRUE);
 }
 
-t_bool	load_collectibles_textures(t_game *game)
+static t_bool	load_collectibles_textures(t_game *game)
 {
 	game->collectibles->textures->collectible = mlx_load_png("textures/collectible.png");
 	if (game->collectibles->textures->collectible == NULL)

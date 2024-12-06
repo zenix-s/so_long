@@ -36,6 +36,9 @@
 // EXIT
 # include "./exit/exit.h"
 
+// COLLECTIBLES
+#include "./collectibles/collectibles.h"
+
 # define TILE_SIZE 64
 // Character Speed pixels per second
 # define CHARACTER_SPEED 320.0
@@ -54,17 +57,10 @@ t_bool						init_map(t_game *game, char **file_path);
 t_bool						init_tileset(t_game *game);
 t_bool						init_player(t_game *game);
 void						init_map_info(t_map_info *validate_map);
-t_bool						init_collectibles(t_game *game);
 
 // RENDER
 t_bool						render_tileset(t_game *game);
 t_bool						render_player(t_game *game);
-t_bool						render_collectibles(t_game *game);
-
-// COLLECTIBLES
-void						collect_collectible(t_game *game, int32_t x,
-								int32_t y);
-t_bool						all_collected(t_game *game);
 
 // TEXT MOVES
 t_bool						update_moves_string(t_game *game);

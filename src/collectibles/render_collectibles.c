@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/collectibles/collectibles.h"
 
 t_bool	render_collectibles(t_game *game)
 {
