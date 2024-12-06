@@ -20,10 +20,10 @@ void	free_player(t_game *game)
 		mlx_delete_image(game->mlx, game->player->img);
 	if (game->player->textures != NULL)
 	{
-		mlx_delete_texture(game->player->textures->player);
-		mlx_delete_texture(game->player->textures->player_1);
-		mlx_delete_texture(game->player->textures->player_2);
-		mlx_delete_texture(game->player->textures->player_3);
+		mlx_delete_texture(game->player->textures->frame_1);
+		mlx_delete_texture(game->player->textures->frame_2);
+		mlx_delete_texture(game->player->textures->frame_3);
+		mlx_delete_texture(game->player->textures->frame_4);
 		free(game->player->textures);
 	}
 	free(game->player);

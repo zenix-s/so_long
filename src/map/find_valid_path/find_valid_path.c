@@ -53,9 +53,9 @@ t_bool	check_roots(t_game *game, t_dis_set *dis_set)
 		x = -1;
 		while (++x < game->map->width)
 		{
-			if (is_wall_tile(x, y, game))
+			if (is_wall_tile(game, x, y))
 				continue ;
-			if (is_special_tile(x, y, game))
+			if (is_special_tile(game, x, y))
 			{
 				if (root == NULL)
 					root = find_dis_item(get_dis_item(dis_set, x, y));

@@ -35,7 +35,7 @@ static void	find_exit(t_game *game)
 		x = 0;
 		while (x < game->map->width)
 		{
-			if (is_exit_tile(x, y, game))
+			if (is_exit_tile(game, x, y))
 			{
 				game->exit->x = x;
 				game->exit->y = y;
@@ -47,7 +47,7 @@ static void	find_exit(t_game *game)
 	}
 }
 
-t_bool	load_exit_textures(t_game *game)
+static t_bool	load_exit_textures(t_game *game)
 {
 	game->exit->textures->exit_closed = mlx_load_png("textures/exit_closed.png");
 	if (game->exit->textures->exit_closed == NULL)

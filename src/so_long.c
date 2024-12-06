@@ -12,7 +12,6 @@
 
 #include "../include/so_long.h"
 
-
 // HOOK
 static void	ft_game_hook(void *param)
 {
@@ -36,7 +35,11 @@ t_game	*init_game_struct(char **argv)
 	if (!init_game(&game))
 		return (NULL);
 	if (!init_map(game, argv))
-		return (NULL);
+		return (free(game), NULL);
+	/**
+		TODO: Hay que liberar game y map, en caso de error,
+			esto va a ser un problema para el resto de la función
+	*/
 	if (!init_mlx(game))
 		return (NULL);
 	if (!init_tileset(game))

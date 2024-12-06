@@ -40,7 +40,7 @@ static t_bool	render_floor(t_game *game, int32_t i)
 {
 	unsigned int	rand;
 
-	rand = gen_rand(1, 4, &game->rand_seed);
+	rand = gen_random_int(1, 4, &game->rand_seed);
 	if (rand == 1)
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->floor_2);
@@ -58,8 +58,8 @@ static t_bool	render_wall(t_game *game, int32_t i)
 	if ((game->tileset->tiles[i]->y + 1) == game->map->height)
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->wall_1);
-	else if (!is_wall_tile(game->tileset->tiles[i]->x,
-			game->tileset->tiles[i]->y + 1, game))
+	else if (!is_wall_tile(game,
+							game->tileset->tiles[i]->x, game->tileset->tiles[i]->y + 1))
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->wall_1);
 	else

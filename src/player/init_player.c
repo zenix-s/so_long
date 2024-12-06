@@ -25,17 +25,17 @@ static t_bool	alloc_player(t_game *game)
 
 static t_bool	load_player_textures(t_game *game)
 {
-	game->player->textures->player = mlx_load_png("textures/player.png");
-	if (game->player->textures->player == NULL)
+	game->player->textures->frame_1 = mlx_load_png("textures/player.png");
+	if (game->player->textures->frame_1 == NULL)
 		return (ft_error("Failed to load player texture"), FALSE);
-	game->player->textures->player_1 = mlx_load_png("textures/player_1.png");
-	if (game->player->textures->player_1 == NULL)
+	game->player->textures->frame_2 = mlx_load_png("textures/player_1.png");
+	if (game->player->textures->frame_2 == NULL)
 		return (ft_error("Failed to load player texture"), FALSE);
-	game->player->textures->player_2 = mlx_load_png("textures/player_2.png");
-	if (game->player->textures->player_2 == NULL)
+	game->player->textures->frame_3 = mlx_load_png("textures/player_2.png");
+	if (game->player->textures->frame_3 == NULL)
 		return (ft_error("Failed to load player texture"), FALSE);
-	game->player->textures->player_3 = mlx_load_png("textures/player_3.png");
-	if (game->player->textures->player_3 == NULL)
+	game->player->textures->frame_4 = mlx_load_png("textures/player_3.png");
+	if (game->player->textures->frame_4 == NULL)
 		return (ft_error("Failed to load player texture"), FALSE);
 	return (TRUE);
 }

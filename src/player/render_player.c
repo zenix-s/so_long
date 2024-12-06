@@ -15,7 +15,7 @@
 t_bool	render_player(t_game *game)
 {
 	game->player->img = mlx_texture_to_image(game->mlx,
-			game->player->textures->player);
+			game->player->textures->frame_1);
 	if (game->player->img == NULL)
 		return (ft_error("Failed to create player image"), FALSE);
 	if (mlx_image_to_window(game->mlx, game->player->img, game->player->x

@@ -93,7 +93,7 @@ t_bool	init_collectibles(t_game *game)
 		x = -1;
 		while (++x < game->map->width)
 		{
-			if (!is_collectible_tile(x, y, game))
+			if (!is_collectible_tile(game, x, y))
 				continue ;
 			if (!init_collectible(&game->collectibles->collectibles[i], x, y))
 				return (FALSE);

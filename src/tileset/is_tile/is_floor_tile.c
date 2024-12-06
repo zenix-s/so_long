@@ -12,7 +12,7 @@
 
 #include "../../../include/so_long.h"
 
-t_bool	is_floor_tile(int32_t x, int32_t y, t_game *game)
+t_bool	is_floor_tile(const t_game *game, const int32_t x, const int32_t y)
 {
 	if (game->map->layout[y][x] == '0' || game->map->layout[y][x] == 'C'
 		|| game->map->layout[y][x] == 'E' || game->map->layout[y][x] == 'P')
