@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/collectibles/collectibles.h"
 
-void	free_collectibles_textures(t_game *game)
+static void	free_collectibles_textures(t_game *game)
 {
 	if (game->collectibles->textures != NULL)
 	{

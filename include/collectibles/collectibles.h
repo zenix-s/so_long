@@ -12,4 +12,6 @@ t_bool	init_collectibles(t_game *game);
 
 t_bool	render_collectibles(t_game *game);
 
+void	free_collectibles(t_game *game);
+
 #endif

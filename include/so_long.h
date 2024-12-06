@@ -105,7 +105,6 @@ void						free_dis_set(t_dis_set *dis_set);
 // END GAME (FREE STRUCTS)
 void						end_game(t_game *game, t_bool success);
 void						end_mlx(t_game *game);
-void						free_collectibles(t_game *game);
 void						free_map(t_game *game);
 void						free_player(t_game *game);
 void						free_tileset(t_game *game);
