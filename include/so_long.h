@@ -27,8 +27,8 @@
 // NULL
 # include <stdio.h>
 
-// UTILS
-# include "./utils/utils.h"
+// SHARED
+#include "./shared/shared.h"
 
 // STRUCTS
 # include "./structs.h"

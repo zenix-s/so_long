@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/collectibles/collectibles.h"
+#include "../../include/so_long.h"
 
 static t_bool	alloc_collectibles(t_game *game, int32_t n_collectibles)
 {

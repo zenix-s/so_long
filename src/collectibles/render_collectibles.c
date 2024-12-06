@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/collectibles/collectibles.h"
+#include "../../include/so_long.h"
 
 t_bool	render_collectibles(t_game *game)
 {

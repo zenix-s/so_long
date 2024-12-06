@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/collectibles/collectibles.h"
+#include "../../include/so_long.h"
 
 void	collect_collectible(t_game *game, int32_t x, int32_t y)
 {
