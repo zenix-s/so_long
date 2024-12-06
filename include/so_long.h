@@ -14,10 +14,6 @@
 
 # define SO_LONG_H
 
-// MLX42 LIB
-# include "../lib/MLX42/include/MLX42/MLX42.h"
-// LIBFT
-# include "../lib/libft/libft.h"
 // Malloc, free, exit
 # include <stdlib.h>
 // Close
@@ -27,17 +23,23 @@
 // NULL
 # include <stdio.h>
 
+// MLX42 LIB
+# include "../lib/MLX42/include/MLX42/MLX42.h"
+
+// LIBFT
+# include "../lib/libft/libft.h"
+
 // SHARED
 # include "./shared/shared.h"
 
 // STRUCTS
 # include "./structs.h"
 
-// EXIT
-# include "./exit/exit.h"
-
 // COLLECTIBLES
 # include "./collectibles/collectibles.h"
+
+// EXIT
+# include "./exit/exit.h"
 
 # define TILE_SIZE 64
 // Character Speed pixels per second

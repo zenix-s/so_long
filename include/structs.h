@@ -1,6 +1,6 @@
 #ifndef STRUCTS_H
 
-#define STRUCTS_H
+# define STRUCTS_H
 
 // INCLUDES SECTION
 
@@ -9,7 +9,6 @@
 
 // Include libft library
 # include "../lib/libft/libft.h"
-
 
 // STRUCTS SECTION
 
