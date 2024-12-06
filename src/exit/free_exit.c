@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/exit/exit.h"
 
 void	free_exit(t_game *game)
 {

@@ -23,4 +23,9 @@ t_bool	open_exit(t_game *game);
  */
 t_bool	render_closed_exit(t_game *game);
 
+/**
+ * Free the exit struct and all its components
+ */
+void	free_exit(t_game *game);
+
 #endif
