@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/map/map_private.h"
 
 void	init_map_info(t_map_info *validate_map)
 {

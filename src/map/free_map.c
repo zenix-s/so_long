@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   valid_n_items.c                                    :+:      :+:    :+:   */
+/*   free_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:28 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Created: 2024/09/04 14:07:52 by serferna          #+#    #+#             */
+/*   Updated: 2024/12/06 20:54:36 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/map/map_private.h"
-#include "../../../include/shared/shared.h"
+#include "../../include/map/map.h"
 
-t_bool	valid_n_items(t_map_info *map_info)
+void	free_map(t_game *game)
 {
-	if (!map_info->player)
-		return (ft_error("Player not found"), FALSE);
-	if (!map_info->exit)
-		return (ft_error("Exit not found"), FALSE);
-	if (!map_info->collectible)
-		return (ft_error("Collectible not found"), FALSE);
-	return (TRUE);
+	int32_t	i;
+
+	if (game->map == NULL)
+		return ;
+	i = -1;
+	while (++i < game->map->height)
+	{
+		if (game->map->layout[i] == NULL)
+			continue ;
+		free(game->map->layout[i]);
+	}
+	free(game->map->layout);
+	free(game->map);
 }

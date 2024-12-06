@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../../include/map/map_private.h"
 #include "../../../include/so_long.h"
 
-void	create_tree(t_game *game, t_dis_set *dis_set)
+static void	create_tree(t_game *game, t_dis_set *dis_set)
 {
 	static const int	dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 	int32_t				y;
@@ -40,7 +41,7 @@ void	create_tree(t_game *game, t_dis_set *dis_set)
 	}
 }
 
-t_bool	check_roots(t_game *game, t_dis_set *dis_set)
+static t_bool	check_roots(t_game *game, t_dis_set *dis_set)
 {
 	int32_t		y;
 	int32_t		x;

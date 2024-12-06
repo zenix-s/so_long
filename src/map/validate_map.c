@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/map/map_private.h"
+#include "../../include/shared/shared.h"
 
 t_bool	valid_map(t_game *game, t_map_info *map_info)
 {

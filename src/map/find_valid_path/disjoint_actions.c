@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/so_long.h"
+#include "../../../include/map/map_private.h"
 
 int32_t	get_dis_set_size(t_game *game)
 {

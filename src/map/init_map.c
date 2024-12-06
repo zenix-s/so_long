@@ -10,9 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/map/map_private.h"
+#include "../../include/map/map.h"
+#include "../../include/shared/shared.h"
 #include "../../include/so_long.h"
 
-t_bool	alloc_map(t_game *game)
+static t_bool	alloc_map(t_game *game)
 {
 	game->map = (t_map *)malloc(sizeof(t_map));
 	if (game->map == NULL)
@@ -23,7 +26,7 @@ t_bool	alloc_map(t_game *game)
 	return (TRUE);
 }
 
-t_bool	alloc_layout(t_game *game, char **line)
+static t_bool	alloc_layout(t_game *game, char **line)
 {
 	char	**new_layout;
 	int32_t	i;

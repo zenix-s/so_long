@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/so_long.h"
+#include "../../../include/map/map_private.h"
 
 void	free_dis_set(t_dis_set *dis_set)
 {

@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/map/map_private.h"
+#include "../../include/shared/shared.h"
 
-t_bool	found_player(t_map_info *map_info)
+static t_bool	found_player(t_map_info *map_info)
 {
 	if (map_info->player)
 		return (ft_error("Player must appear exactly once"), TRUE);
@@ -20,7 +21,7 @@ t_bool	found_player(t_map_info *map_info)
 	return (FALSE);
 }
 
-t_bool	found_exit(t_map_info *map_info)
+static t_bool	found_exit(t_map_info *map_info)
 {
 	if (map_info->exit)
 		return (ft_error("Exit must appear exactly once"), TRUE);

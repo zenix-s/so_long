@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_map.c                                         :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:07:52 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:07:57 by serferna         ###   ########.fr       */
+/*   Created: 2024/12/06 18:04:53 by serferna          #+#    #+#             */
+/*   Updated: 2024/12/06 20:55:29 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef MAP_H
 
-#include "../../include/so_long.h"
+# define MAP_H
 
-void	free_map(t_game *game)
-{
-	int32_t	i;
+# include "../structs.h"
 
-	if (game->map == NULL)
-		return ;
-	i = -1;
-	while (++i < game->map->height)
-	{
-		if (game->map->layout[i] == NULL)
-			continue ;
-		free(game->map->layout[i]);
-	}
-	free(game->map->layout);
-	free(game->map);
-}
+t_bool	init_map(t_game *game, char **file_path);
+
+void	free_map(t_game *game);
+
+#endif

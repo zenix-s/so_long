@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/so_long.h"
+#include "../../../include/map/map_private.h"
+#include "../../../include/shared/shared.h"
 
-t_bool	alloc_dis_item(t_dis_item **dis_item, int32_t x, int32_t y)
+static t_bool	alloc_dis_item(t_dis_item **dis_item, int32_t x, int32_t y)
 {
 	*dis_item = malloc(sizeof(t_dis_item));
 	if (*dis_item == NULL)
@@ -23,7 +24,7 @@ t_bool	alloc_dis_item(t_dis_item **dis_item, int32_t x, int32_t y)
 	return (TRUE);
 }
 
-t_bool	alloc_dis_set_items(t_dis_set **dis_set, t_game *game)
+static t_bool	alloc_dis_set_items(t_dis_set **dis_set, t_game *game)
 {
 	int32_t	i;
 	int32_t	y;
