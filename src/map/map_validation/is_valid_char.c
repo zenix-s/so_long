@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map_info.c                                    :+:      :+:    :+:   */
+/*   is_valid_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:34 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Created: 2024/12/07 12:49:17 by serferna          #+#    #+#             */
+/*   Updated: 2024/12/07 18:52:52 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/map/map_private.h"
+#include "../../../include/map/map_private.h"
 
-void	init_map_info(t_map_info *validate_map)
+t_bool	is_valid_char(char c)
 {
-	validate_map->player = FALSE;
-	validate_map->exit = FALSE;
-	validate_map->collectible = FALSE;
+	return (
+		c == FLOOR
+		|| c == WALL
+		|| c == COLLECTIBLE
+		|| c == EXIT
+		|| c == PLAYER
+		|| c == '\n'
+	);
 }

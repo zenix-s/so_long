@@ -57,18 +57,26 @@ int	main(int argc, char **argv)
 {
 	t_game	*game;
 
+	printf("Estoy en %s, %d\n", __FILE__, __LINE__);
 	if (!check_arguments(argc, argv))
 		return (EXIT_FAILURE);
 	game = init_game_struct(argv);
 	if (game == NULL)
 		return (EXIT_FAILURE);
 	print_layout(game);
+	printf("Estoy en %s, %d\n", __FILE__, __LINE__);
 	render_tileset(game);
+	printf("Estoy en %s, %d", __FILE__, __LINE__);
 	render_collectibles(game);
+	printf("Estoy en %s, %d", __FILE__, __LINE__);
 	render_closed_exit(game);
+	printf("Estoy en %s, %d", __FILE__, __LINE__);
 	render_player(game);
+	printf("Estoy en %s, %d", __FILE__, __LINE__);
 	update_moves_string(game);
+	printf("Estoy en %s, %d", __FILE__, __LINE__);
 	mlx_loop_hook(game->mlx, ft_game_hook, game);
+	printf("Estoy en %s, %d", __FILE__, __LINE__);
 	mlx_loop(game->mlx);
 	end_game(game, TRUE);
 	return (EXIT_SUCCESS);

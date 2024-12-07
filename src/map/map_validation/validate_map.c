@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   valid_n_items.c                                    :+:      :+:    :+:   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:28 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Created: 2024/09/04 14:08:37 by serferna          #+#    #+#             */
+/*   Updated: 2024/12/07 12:55:41 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/map/map_private.h"
 #include "../../../include/shared/shared.h"
 
-t_bool	valid_n_items(t_map_info *map_info)
+t_bool	valid_map(t_game *game)
 {
-	if (!map_info->player)
-		return (ft_error("Player not found"), FALSE);
-	if (!map_info->exit)
-		return (ft_error("Exit not found"), FALSE);
-	if (!map_info->collectible)
-		return (ft_error("Collectible not found"), FALSE);
+	if (!valid_n_items(game))
+		return (FALSE);
+	if (!check_border(game))
+		return (FALSE);
 	return (TRUE);
 }
+
+// Esto tendria que estar aparte sub modulo path validation
+	// if (!find_valid_path(game))
+	// 	return (ft_error("Not all collectibles and exit are reachable"), FALSE);

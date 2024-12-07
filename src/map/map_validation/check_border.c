@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_map.c                                     :+:      :+:    :+:   */
+/*   check_border.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:37 by serferna          #+#    #+#             */
+/*   Created: 2024/09/04 14:08:26 by serferna          #+#    #+#             */
 /*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/map/map_private.h"
-#include "../../include/shared/shared.h"
+#include "../../../include/map/map_private.h"
+#include "../../../include/shared/shared.h"
 
-t_bool	valid_map(t_game *game, t_map_info *map_info)
+t_bool	check_border(t_game *game)
 {
-	if (!valid_n_items(map_info))
-		return (FALSE);
-	if (!check_border(game))
-		return (FALSE);
-	if (!find_valid_path(game))
-		return (ft_error("Not all collectibles and exit are reachable"), FALSE);
+	int32_t	x;
+	int32_t	y;
+
+	y = -1;
+	while (++y < game->map->height)
+	{
+		x = -1;
+		while (++x < game->map->width)
+		{
+			if ((y == 0 || y == game->map->height - 1)
+				&& game->map->layout[y][x]->type != WALL)
+				return (ft_error("Invalid map file_1"), FALSE);
+			else if ((x == 0 || x == game->map->width - 1)
+				&& game->map->layout[y][x]->type != WALL)
+				return (ft_error("Invalid map file_2"), FALSE);
+		}
+	}
 	return (TRUE);
 }
