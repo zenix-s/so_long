@@ -6,11 +6,11 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:07:52 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:07:57 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/07 00:10:16 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/player/player.h"
 
 void	free_player(t_game *game)
 {

@@ -6,10 +6,11 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:08:51 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/07 01:04:01 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/player/player.h"
 #include "../../include/so_long.h"
 
 t_bool	render_player(t_game *game)

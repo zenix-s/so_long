@@ -1,8 +1,9 @@
-#ifndef PLAYER_HOOK_PRIVATE_H
 
-# define PLAYER_HOOK_PRIVATE_H
+#ifndef PLAYER_PRIVATE_H
 
-# include "../../../include/so_long.h"
+# define PLAYER_PRIVATE_H
+
+# include "../structs.h"
 
 /**
  * Every 1/4 of a second, the player will change its animation

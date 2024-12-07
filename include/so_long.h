@@ -44,6 +44,9 @@
 // MAP
 # include "./map/map.h"
 
+// PLAYER
+# include "./player/player.h"
+
 # define TILE_SIZE 64
 // Character Speed pixels per second
 # define CHARACTER_SPEED 320.0
@@ -56,11 +59,9 @@ void	ft_error(char *msg);
 t_bool	init_mlx(t_game *game);
 t_bool	init_game(t_game **game);
 t_bool	init_tileset(t_game *game);
-t_bool	init_player(t_game *game);
 
 // RENDER
 t_bool	render_tileset(t_game *game);
-t_bool	render_player(t_game *game);
 
 // TEXT MOVES
 t_bool	update_moves_string(t_game *game);
@@ -77,8 +78,6 @@ t_bool	is_special_tile(const t_game *game, const int32_t x, const int32_t y);
 t_bool	is_wall_tile(const t_game *game, const int32_t x, const int32_t y);
 
 // PLAYER
-t_bool	ft_player_move(t_game *game);
-
 void	print_layout(t_game *game);
 
 // MAP VALIDATION
@@ -86,7 +85,6 @@ void	print_layout(t_game *game);
 // END GAME (FREE STRUCTS)
 void	end_game(t_game *game, t_bool success);
 void	end_mlx(t_game *game);
-void	free_player(t_game *game);
 void	free_tileset(t_game *game);
 
 // HOOKS

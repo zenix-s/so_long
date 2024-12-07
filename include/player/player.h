@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 18:04:53 by serferna          #+#    #+#             */
-/*   Updated: 2024/12/06 21:49:11 by serferna         ###   ########.fr       */
+/*   Created: 2024/12/06 21:54:02 by serferna          #+#    #+#             */
+/*   Updated: 2024/12/06 23:06:55 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef MAP_H
 
-# define MAP_H
+#ifndef PLAYER_H
 
+# define PLAYER_H
+
+# include "../../include/shared/shared.h"
 # include "../structs.h"
 
-t_bool	init_map(t_game *game, char **file_path);
+t_bool	init_player(t_game *game);
 
-void	free_map(t_game *game);
+t_bool	ft_player_move(t_game *game);
+
+t_bool	render_player(t_game *game);
+
+void	free_player(t_game *game);
 
 #endif

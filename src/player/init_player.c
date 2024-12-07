@@ -6,18 +6,21 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:08:44 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/06 22:10:17 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/player/player.h"
 
 static t_bool	alloc_player(t_game *game)
 {
+	t_player_texture	*texture;
+
 	game->player = (t_player *)malloc(sizeof(t_player));
 	if (game->player == NULL)
 		return (ft_error("Failed to allocate memory for player"), FALSE);
-	game->player->textures = (t_player_texture *)malloc(sizeof(t_player_texture));
+	texture = (t_player_texture *)malloc(sizeof(t_player_texture));
+	game->player->textures = texture;
 	if (game->player->textures == NULL)
 		return (ft_error("Failed to allocate memory for player"), FALSE);
 	return (TRUE);

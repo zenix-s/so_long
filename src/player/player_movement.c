@@ -6,13 +6,14 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:08:52 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/06 23:52:52 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/player/player.h"
 #include "../../include/so_long.h"
 
-t_bool	cacl_new_pos(t_game *game, int32_t *new_x, int32_t *new_y)
+static t_bool	cacl_new_pos(t_game *game, int32_t *new_x, int32_t *new_y)
 {
 	*new_x = game->player->img->instances[0].x;
 	*new_y = game->player->img->instances[0].y;

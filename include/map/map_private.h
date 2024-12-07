@@ -6,7 +6,7 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:04:45 by serferna          #+#    #+#             */
-/*   Updated: 2024/12/06 20:26:28 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/06 21:48:57 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MAP_PRIVATE_H
@@ -35,9 +35,7 @@ t_bool		valid_n_items(t_map_info *validate_map);
 
 t_bool		check_line(t_game *game, char *line, t_map_info *validate_map);
 
-
 void		init_map_info(t_map_info *validate_map);
-
 
 t_bool		valid_map(t_game *game, t_map_info *validate_map);
 
