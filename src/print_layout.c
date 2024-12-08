@@ -23,7 +23,7 @@ void	print_layout(t_game *game)
 		x = 0;
 		while (x < game->map->width)
 		{
-			ft_printf("%c", game->map->layout[y][x]);
+			ft_printf("%c", game->map->layout[y][x]->type);
 			x++;
 		}
 		ft_printf("\n");

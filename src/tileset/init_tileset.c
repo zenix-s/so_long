@@ -38,9 +38,9 @@ static t_bool	init_tile(t_tile **tile, int32_t x, int32_t y, t_game *game)
 	if (*tile == NULL)
 		return (ft_error("Failed to allocate memory for tile"), FALSE);
 	(*tile)->img = NULL;
-	if (is_floor_tile(game, x, y))
+	if (is_floor(game, x, y))
 		(*tile)->type = '0';
-	else if (is_wall_tile(game, x, y))
+	else if (is_wall(game, x, y))
 		(*tile)->type = '1';
 	return (true);
 }

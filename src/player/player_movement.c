@@ -41,12 +41,12 @@ t_bool	ft_player_move(t_game *game)
 
 	if (!cacl_new_pos(game, &new_x, &new_y))
 		return (FALSE);
-	if (is_floor_tile(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
+	if (is_floor(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
 	{
 		game->player->moves++;
-		if (is_collectible_tile(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
+		if (is_collectible(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
 			collect_collectible(game, new_x / TILE_SIZE, new_y / TILE_SIZE);
-		if (is_exit_tile(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
+		if (is_exit(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
 		{
 			if (all_collected(game))
 				end_game(game, TRUE);

@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map_info.c                                    :+:      :+:    :+:   */
+/*   valid_n_items.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:34 by serferna          #+#    #+#             */
+/*   Created: 2024/09/04 14:08:28 by serferna          #+#    #+#             */
 /*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/map/map_private.h"
+#include "../../../include/map/map_private.h"
 
-void	init_map_info(t_map_info *validate_map)
+t_bool	valid_items(t_game *game)
 {
-	validate_map->player = FALSE;
-	validate_map->exit = FALSE;
-	validate_map->collectible = FALSE;
+	if (game->map->player == NULL)
+		return (ft_error("Player not found"), FALSE);
+	if (game->map->exit == NULL)
+		return (ft_error("Exit not found"), FALSE);
+	if (game->map->n_collectibles == 0)
+		return (ft_error("Collectible not found"), FALSE);
+	return (TRUE);
 }

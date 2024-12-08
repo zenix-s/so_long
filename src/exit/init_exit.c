@@ -6,7 +6,7 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:08:10 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/08 15:53:18 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,17 @@ static t_bool	alloc_exit(t_game *game)
 
 static void	find_exit(t_game *game)
 {
-	int32_t	y;
-	int32_t	x;
+	t_map_node_item	*item;
 
-	y = 0;
-	while (y < game->map->height)
-	{
-		x = 0;
-		while (x < game->map->width)
-		{
-			if (is_exit_tile(game, x, y))
-			{
-				game->exit->x = x;
-				game->exit->y = y;
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
+	item = game->map->exit;
+	game->exit->x = item->x;
+	game->exit->y = item->y;
 }
 
 static t_bool	load_exit_textures(t_game *game)
 {
-	game->exit->textures->exit_closed = mlx_load_png("textures/exit_closed.png");
+	game->exit->textures->exit_closed
+		= mlx_load_png("textures/exit_closed.png");
 	if (game->exit->textures->exit_closed == NULL)
 		return (ft_error("Failed to load exit texture"), FALSE);
 	game->exit->textures->exit_open = mlx_load_png("textures/exit_open.png");

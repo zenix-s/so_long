@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_map.c                                     :+:      :+:    :+:   */
+/*   gen_rand.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:37 by serferna          #+#    #+#             */
+/*   Created: 2024/09/04 14:09:10 by serferna          #+#    #+#             */
 /*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/map/map_private.h"
-#include "../../include/shared/shared.h"
+#include "../../include/utils/utils.h"
 
-t_bool	valid_map(t_game *game, t_map_info *map_info)
+unsigned int	gen_random_int(
+	const unsigned int min,
+	const unsigned int max,
+	unsigned int *seed
+)
 {
-	if (!valid_n_items(map_info))
-		return (FALSE);
-	if (!check_border(game))
-		return (FALSE);
-	if (!find_valid_path(game))
-		return (ft_error("Not all collectibles and exit are reachable"), FALSE);
-	return (TRUE);
+	*seed = *seed * 1103515245 + 12345;
+	return (1 + (((*seed / 65536) % 32768) % (max - min + 1)));
 }

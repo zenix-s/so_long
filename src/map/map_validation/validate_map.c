@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_collectible_tile.c                              :+:      :+:    :+:   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:56 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Created: 2024/09/04 14:08:37 by serferna          #+#    #+#             */
+/*   Updated: 2024/12/08 00:13:35 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/so_long.h"
+#include "../../../include/map/map_private.h"
 
-t_bool	is_collectible_tile(const t_game *game, const int32_t x, const int32_t y)
+t_bool	valid_map(t_game *game)
 {
-	if (game->map->layout[y][x] == 'C')
-		return (TRUE);
-	return (FALSE);
+	if (!valid_items(game))
+		return (FALSE);
+	if (!check_border(game))
+		return (FALSE);
+	return (TRUE);
 }

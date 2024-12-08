@@ -21,6 +21,16 @@
 // Include libft library
 # include "../lib/libft/libft.h"
 
+// ENUMS SECTION
+typedef enum s_map_node
+{
+	WALL = '1',
+	FLOOR = '0',
+	EXIT = 'E',
+	COLLECTIBLE = 'C',
+	PLAYER = 'P'
+}							t_map_node;
+
 // STRUCTS SECTION
 
 // PLAYER RELATED
@@ -109,33 +119,38 @@ typedef struct s_collectibles
 }							t_collectibles;
 
 // MAP RELATED
+typedef struct s_map_node_item
+{
+	struct s_map_node_item	*parent;
+	int32_t					x;
+	int32_t					y;
+	t_map_node				type;
+}							t_map_node_item;
+
 typedef struct s_map
 {
 	int32_t					width;
 	int32_t					height;
-	char					**layout;
+	t_map_node_item			***layout;
+	t_map_node_item			*player;
+	t_map_node_item			*exit;
+	t_map_node_item			**collectibles;
+	int32_t					n_collectibles;
 }							t_map;
 
-typedef struct s_map_info
-{
-	t_bool					player;
-	t_bool					exit;
-	t_bool					collectible;
-}							t_map_info;
-
 // DISJOINT SET (FOR MAP VALIDATION)
-typedef struct s_dis_item
-{
-	struct s_dis_item		*parent;
-	int32_t					x;
-	int32_t					y;
-}							t_dis_item;
+// typedef struct s_dis_item
+// {
+// 	struct s_dis_item		*parent;
+// 	int32_t					x;
+// 	int32_t					y;
+// }							t_dis_item;
 
-typedef struct s_dis_set
-{
-	t_dis_item				**items;
-	int32_t					size;
-}							t_dis_set;
+// typedef struct s_dis_set
+// {
+// 	t_dis_item				**items;
+// 	int32_t					size;
+// }							t_dis_set;
 
 // GAME PRINCIPAL STRUCT
 typedef struct s_game
