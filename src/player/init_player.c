@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/player/player.h"
+#include <time.h>
 
 static t_bool	alloc_player(t_game *game)
 {
@@ -45,20 +46,11 @@ static t_bool	load_player_textures(t_game *game)
 
 static t_bool	find_player(t_game *game, int32_t *x, int32_t *y)
 {
-	*y = 0;
-	*x = 0;
-	while (*y < game->map->height)
-	{
-		*x = 0;
-		while (*x < game->map->width)
-		{
-			if (game->map->layout[*y][*x]->type == PLAYER)
-				return (TRUE);
-			(*x)++;
-		}
-		(*y)++;
-	}
-	return (FALSE);
+	if (game->map->player == NULL)
+		return (ft_error("Player starting position not found"), FALSE);
+	*x = game->map->player->x;
+	*y = game->map->player->y;
+	return (TRUE);
 }
 
 t_bool	init_player(t_game *game)
@@ -69,7 +61,7 @@ t_bool	init_player(t_game *game)
 	if (!alloc_player(game))
 		return (FALSE);
 	if (!find_player(game, &x, &y))
-		return (ft_error("Player starting position not found"), FALSE);
+		return (FALSE);
 	if (!load_player_textures(game))
 		return (FALSE);
 	game->player->x = x;
