@@ -14,8 +14,7 @@
 
 # define PLAYER_H
 
-# include "../../include/shared/shared.h"
-# include "../structs.h"
+# include "../../include/shared.h"
 
 t_bool	init_player(t_game *game);
 

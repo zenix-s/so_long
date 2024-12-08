@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_floor_tile.c                                    :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:59 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Created: 2024/12/06 12:54:55 by serferna          #+#    #+#             */
+/*   Updated: 2024/12/07 01:23:41 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef UTILS_H
 
-#include "../../../include/so_long.h"
+# define UTILS_H
 
-t_bool	is_floor_tile(const t_game *game, const int32_t x, const int32_t y)
-{
-	if (game->map->layout[y][x] == '0' || game->map->layout[y][x] == 'C'
-		|| game->map->layout[y][x] == 'E' || game->map->layout[y][x] == 'P')
-		return (TRUE);
-	return (FALSE);
-}
+unsigned int	gen_random_int(
+					const unsigned int min,
+					const unsigned int max,
+					unsigned int *seed);
+
+#endif

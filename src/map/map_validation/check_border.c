@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../../include/map/map_private.h"
-#include "../../../include/shared/shared.h"
 
 t_bool	check_border(t_game *game)
 {

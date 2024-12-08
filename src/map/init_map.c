@@ -12,8 +12,6 @@
 
 #include "../../include/map/map.h"
 #include "../../include/map/map_private.h"
-#include "../../include/shared/shared.h"
-#include "../../include/so_long.h"
 
 static t_bool	alloc_map(t_game *game)
 {
@@ -30,40 +28,61 @@ static t_bool	alloc_map(t_game *game)
 	return (TRUE);
 }
 
-static t_bool	re_alloc_layout(t_game *game, t_map_node_item ***new_layout)
+static t_bool	re_alloc_layout(t_game *game, t_map_node_item ****new_layout)
 {
 	int32_t	i;
 
-	new_layout = malloc(sizeof(t_map_node_item **) * (game->map->height + 1));
-	if (new_layout == NULL)
+	*new_layout = malloc(sizeof(t_map_node_item **) * (game->map->height + 1));
+	if (*new_layout == NULL)
 		return (ft_error("Failed to allocate memory for map"), FALSE);
 	i = -1;
 	while (++i < game->map->height)
-		new_layout[i] = game->map->layout[i];
-	new_layout[i] = malloc(sizeof(t_map_node_item *) * (game->map->width + 1));
-	if (new_layout[i] == NULL)
+		(*new_layout)[i] = game->map->layout[i];
+	(*new_layout)[i] = malloc(sizeof(t_map_node_item *) * game->map->width);
+	if ((*new_layout)[i] == NULL)
 	{
-		free(new_layout);
+		free(*new_layout);
 		return (ft_error("Failed to allocate memory for map"), FALSE);
 	}
+	return (TRUE);
+}
+
+static t_bool	init_item(
+	t_game *game,
+	t_map_node_item **item,
+	int32_t x,
+	char type
+)
+{
+	if (!is_valid_char(type))
+		return (ft_error("Invalid character in map"), FALSE);
+	*item = (t_map_node_item *)malloc(sizeof(t_map_node_item));
+	if (*item == NULL)
+		return (ft_error("Failed to allocate memory for item"), FALSE);
+	(*item)->x = x;
+	(*item)->y = game->map->height;
+	(*item)->type = type;
+	(*item)->parent = *item;
+	return (TRUE);
 }
 
 static t_bool	alloc_layout(t_game *game, char *line)
 {
 	t_map_node_item	***new_layout;
-	t_map_node_item	*item;
 	int32_t			i;
 
 	if (!validate_line(game, line))
 		return (FALSE);
-	if (!re_alloc_layout(game, new_layout))
+	new_layout = NULL;
+	if (!re_alloc_layout(game, &new_layout))
 		return (FALSE);
 	i = -1;
 	while (++i < game->map->width)
 	{
-		if (!validate_item(game, item, i, line[i]))
-			return (FALSE);
-		new_layout[game->map->height][i] = item;
+		if (!init_item(game, &new_layout[game->map->height][i], i, line[i]))
+			return (free(new_layout), FALSE);
+		if (!validate_item(game, new_layout[game->map->height][i]))
+			return (free(new_layout), FALSE);
 	}
 	if (game->map->layout != NULL)
 		free(game->map->layout);
@@ -91,6 +110,8 @@ t_bool	init_map(t_game *game, char **file_path)
 		game->map->height++;
 	}
 	if (!valid_map(game))
-		return (close(fd), free(line), FALSE);
+		return (close(fd), FALSE);
+	if (!valid_path(game))
+		return (close(fd), FALSE);
 	return (close(fd), TRUE);
 }

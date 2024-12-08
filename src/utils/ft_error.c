@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_dis_set.c                                     :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:22 by serferna          #+#    #+#             */
+/*   Created: 2024/09/04 14:08:07 by serferna          #+#    #+#             */
 /*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/map/map_private.h"
+#include "../../include/shared.h"
 
-void	free_dis_set(t_dis_set *dis_set)
+void	ft_error(char *msg)
 {
-	int32_t	i;
-
-	i = 0;
-	while (i < dis_set->size)
-	{
-		free(dis_set->items[i]);
-		i++;
-	}
-	free(dis_set->items);
-	free(dis_set);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
 }

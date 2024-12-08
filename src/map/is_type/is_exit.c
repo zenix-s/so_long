@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shared.h                                           :+:      :+:    :+:   */
+/*   is_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 12:54:55 by serferna          #+#    #+#             */
-/*   Updated: 2024/12/06 16:03:56 by serferna         ###   ########.fr       */
+/*   Created: 2024/09/04 14:08:57 by serferna          #+#    #+#             */
+/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef SHARED_H
 
-# define SHARED_H
+#include "../../../include/map/map_shared.h"
 
-unsigned int	gen_random_int(
-					const unsigned int min,
-					const unsigned int max,
-					unsigned int *seed);
-
-void			ft_error(char *msg);
-
-#endif
+t_bool	is_exit(const t_game *game, const int32_t x, const int32_t y)
+{
+	if (game->map->layout[y][x]->type == EXIT)
+		return (TRUE);
+	return (FALSE);
+}

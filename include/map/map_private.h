@@ -13,7 +13,7 @@
 
 # define MAP_PRIVATE_H
 
-# include "../structs.h"
+# include "../shared.h"
 
 // t_bool		alloc_dis_set(t_dis_set **dis_set, t_game *game);
 
@@ -29,25 +29,22 @@
 
 // void		free_dis_set(t_dis_set *dis_set);
 
-
-// New section
-
+// Map Validation
 
 t_bool	validate_line(t_game *game, char *line);
 
-t_bool	validate_item(
-	t_game *game,
-	t_map_node_item *item,
-	int32_t x,
-	char type
-);
+t_bool	validate_item(t_game *game, t_map_node_item *item);
 
-t_bool		is_valid_char(char c);
+t_bool	is_valid_char(char c);
 
-t_bool		check_border(t_game *game);
+t_bool	check_border(t_game *game);
 
-t_bool		valid_n_items(t_game *game);
+t_bool	valid_n_items(t_game *game);
 
-t_bool		valid_map(t_game *game);
+t_bool	valid_map(t_game *game);
+
+// Path Validation
+
+t_bool	valid_path(t_game *game);
 
 #endif

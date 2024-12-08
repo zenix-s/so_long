@@ -52,7 +52,7 @@ static t_bool	find_player(t_game *game, int32_t *x, int32_t *y)
 		*x = 0;
 		while (*x < game->map->width)
 		{
-			if (game->map->layout[*y][*x] == 'P')
+			if (game->map->layout[*y][*x]->type == PLAYER)
 				return (TRUE);
 			(*x)++;
 		}

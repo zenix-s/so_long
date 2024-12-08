@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../../include/map/map_private.h"
-#include "../../../include/shared/shared.h"
 
 static int32_t	line_len(char *line)
 {
@@ -33,4 +32,5 @@ t_bool	validate_line(t_game *game, char *line)
 	}
 	if (game->map->height != 0 && game->map->width != line_len(line))
 		return (ft_error("Invalid line length"), FALSE);
+	return (TRUE);
 }

@@ -58,7 +58,7 @@ static t_bool	render_wall(t_game *game, int32_t i)
 	if ((game->tileset->tiles[i]->y + 1) == game->map->height)
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->wall_1);
-	else if (!is_wall_tile(game,
+	else if (!is_wall(game,
 							game->tileset->tiles[i]->x, game->tileset->tiles[i]->y + 1))
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->wall_1);

@@ -46,7 +46,7 @@ static int32_t	get_number_collectibles(t_game *game)
 		x = 0;
 		while (x < game->map->width)
 		{
-			if (game->map->layout[y][x] == 'C')
+			if (game->map->layout[y][x]->type == COLLECTIBLE)
 				n_collectibles++;
 			x++;
 		}
@@ -95,7 +95,7 @@ t_bool	init_collectibles(t_game *game)
 		x = -1;
 		while (++x < game->map->width)
 		{
-			if (!is_collectible_tile(game, x, y))
+			if (!is_collectible(game, x, y))
 				continue ;
 			if (!init_collectible(&game->collectibles->collectibles[i], x, y))
 				return (FALSE);
