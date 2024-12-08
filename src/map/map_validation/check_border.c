@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../include/map/map_private.h"
+#include "../../../include/shared.h"
 
 t_bool	check_border(t_game *game)
 {
@@ -20,16 +21,18 @@ t_bool	check_border(t_game *game)
 	y = -1;
 	while (++y < game->map->height)
 	{
-		x = -1;
-		while (++x < game->map->width)
+		if (y == 0 || y == game->map->height - 1)
 		{
-			if ((y == 0 || y == game->map->height - 1)
-				&& game->map->layout[y][x]->type != WALL)
-				return (ft_error("Invalid map file_1"), FALSE);
-			else if ((x == 0 || x == game->map->width - 1)
-				&& game->map->layout[y][x]->type != WALL)
-				return (ft_error("Invalid map file_2"), FALSE);
+			x = -1;
+			while (++x < game->map->width)
+			{
+				if (!is_wall(game, x, y))
+					return (ft_error("Map is not surrounded by walls"), FALSE);
+			}
 		}
+		else if (!is_wall(game, 0, y) || !is_wall(game, game->map->width - 1,
+				y))
+			return (ft_error("Map is not surrounded by walls"), FALSE);
 	}
 	return (TRUE);
 }

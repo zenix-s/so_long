@@ -12,7 +12,7 @@
 
 #include "../../../include/map/map_private.h"
 
-t_bool	valid_n_items(t_game *game)
+t_bool	valid_items(t_game *game)
 {
 	if (game->map->player == NULL)
 		return (ft_error("Player not found"), FALSE);

@@ -14,7 +14,7 @@
 
 t_bool	valid_map(t_game *game)
 {
-	if (!valid_n_items(game))
+	if (!valid_items(game))
 		return (FALSE);
 	if (!check_border(game))
 		return (FALSE);
