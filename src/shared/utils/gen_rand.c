@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_wall.c                                  :+:      :+:    :+:   */
+/*   gen_rand.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:09:00 by serferna          #+#    #+#             */
+/*   Created: 2024/09/04 14:09:10 by serferna          #+#    #+#             */
 /*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/map/map_shared.h"
+#include "../../../include/utils/utils.h"
 
-t_bool	is_special(const t_game *game, const int32_t x, const int32_t y)
+unsigned int	gen_random_int(
+	const unsigned int min,
+	const unsigned int max,
+	unsigned int *seed
+)
 {
-	if (game->map->layout[y][x]->type == COLLECTIBLE
-		|| game->map->layout[y][x]->type == PLAYER
-		|| game->map->layout[y][x]->type == EXIT)
-		return (TRUE);
-	return (FALSE);
+	*seed = *seed * 1103515245 + 12345;
+	return (1 + (((*seed / 65536) % 32768) % (max - min + 1)));
 }

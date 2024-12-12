@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_collectible.c                              :+:      :+:    :+:   */
+/*   all_collected.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:08:56 by serferna          #+#    #+#             */
+/*   Created: 2024/09/04 14:08:00 by serferna          #+#    #+#             */
 /*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/map/map_shared.h"
+#include "../../../include/shared/collectibles_shared.h"
 
-t_bool	is_collectible(const t_game *game, const int32_t x,
-		const int32_t y)
+t_bool	all_collected(t_game *game)
 {
-	if (game->map->layout[y][x]->type == COLLECTIBLE)
+	if (game->player->score == game->collectibles->n_collectibles)
 		return (TRUE);
 	return (FALSE);
 }

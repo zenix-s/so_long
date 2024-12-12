@@ -39,7 +39,10 @@
 # include "./utils/utils.h"
 
 // Map related global utilities
-# include "./map/map_shared.h"
+# include "./shared/map_shared.h"
+
+// Collectibles related global utilities
+# include "./shared/collectibles_shared.h"
 
 # define TILE_SIZE 64
 // Character Speed pixels per second
@@ -47,5 +50,7 @@
 # define VALID_EXTENSION ".ber"
 
 void	ft_error(char *msg);
+
+t_bool	update_moves_string(t_game *game);
 
 #endif

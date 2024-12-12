@@ -6,11 +6,11 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:08:41 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:48:11 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../../include/shared.h"
 
 t_bool	update_moves_string(t_game *game)
 {
