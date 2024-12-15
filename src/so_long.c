@@ -42,7 +42,7 @@ t_game	*init_game_struct(char **argv)
 	*/
 	if (!init_mlx(game))
 		return (NULL);
-	if (!init_tileset(game))
+	if (!init_map_render(game))
 		return (NULL);
 	if (!init_collectibles(game))
 		return (NULL);
@@ -63,7 +63,7 @@ int	main(int argc, char **argv)
 	if (game == NULL)
 		return (EXIT_FAILURE);
 	print_layout(game);
-	render_tileset(game);
+	render_map_render(game);
 	render_collectibles(game);
 	render_closed_exit(game);
 	render_player(game);

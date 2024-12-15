@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_tileset.c                                   :+:      :+:    :+:   */
+/*   render_map_render.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:09:06 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:18:16 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/map_reder/map_render.h"
 
 static t_bool	render_floor(t_game *game, int32_t i);
 static t_bool	render_wall(t_game *game, int32_t i);
 
-t_bool	render_tileset(t_game *game)
+t_bool	render_map_render(t_game *game)
 {
 	int32_t	i;
 
@@ -58,8 +58,8 @@ static t_bool	render_wall(t_game *game, int32_t i)
 	if ((game->tileset->tiles[i]->y + 1) == game->map->height)
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->wall_1);
-	else if (!is_wall(game,
-							game->tileset->tiles[i]->x, game->tileset->tiles[i]->y + 1))
+	else if (!is_wall(game, game->tileset->tiles[i]->x,
+			game->tileset->tiles[i]->y + 1))
 		game->tileset->tiles[i]->img = mlx_texture_to_image(game->mlx,
 				game->tileset->textures->wall_1);
 	else

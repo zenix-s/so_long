@@ -29,16 +29,12 @@
 // PLAYER
 # include "./player/player.h"
 
-// UTILS
-void	ft_error(char *msg);
+// MAP_RENDER
+# include "./map_reder/map_render.h"
 
 // INIT STRUCTS
 t_bool	init_mlx(t_game *game);
 t_bool	init_game(t_game **game);
-t_bool	init_tileset(t_game *game);
-
-// RENDER
-t_bool	render_tileset(t_game *game);
 
 // TEXT MOVES
 t_bool	update_moves_string(t_game *game);
@@ -56,7 +52,6 @@ void	print_layout(t_game *game);
 // END GAME (FREE STRUCTS)
 void	end_game(t_game *game, t_bool success);
 void	end_mlx(t_game *game);
-void	free_tileset(t_game *game);
 
 // HOOKS
 void	ft_player_hook(t_game *game);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_tileset.c                                     :+:      :+:    :+:   */
+/*   init_map_render.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/map_reder/map_render.h"
 
-static t_bool	alloc_tileset(t_game *game)
+static t_bool	alloc_map_render(t_game *game)
 {
 	int32_t	width;
 	int32_t	height;
@@ -32,7 +32,7 @@ static t_bool	alloc_tileset(t_game *game)
 	return (TRUE);
 }
 
-static t_bool	init_tile(t_tile **tile, int32_t x, int32_t y, t_game *game)
+static t_bool	init_map_render_node(t_tile **tile, int32_t x, int32_t y, t_game *game)
 {
 	*tile = (t_tile *)malloc(sizeof(t_tile));
 	if (*tile == NULL)
@@ -45,7 +45,7 @@ static t_bool	init_tile(t_tile **tile, int32_t x, int32_t y, t_game *game)
 	return (true);
 }
 
-static t_bool	load_tile_textures(t_game *game)
+static t_bool	load_map_render_node_textures(t_game *game)
 {
 	game->tileset->textures->wall = mlx_load_png("textures/wall.png");
 	if (game->tileset->textures->wall == NULL)
@@ -65,14 +65,14 @@ static t_bool	load_tile_textures(t_game *game)
 	return (TRUE);
 }
 
-t_bool	init_tileset(t_game *game)
+t_bool	init_map_render(t_game *game)
 {
 	int32_t	x;
 	int32_t	y;
 
-	if (!alloc_tileset(game))
+	if (!alloc_map_render(game))
 		return (FALSE);
-	if (!load_tile_textures(game))
+	if (!load_map_render_node_textures(game))
 		return (FALSE);
 	y = 0;
 	while (y < game->map->height)
@@ -80,7 +80,7 @@ t_bool	init_tileset(t_game *game)
 		x = 0;
 		while (x < game->map->width)
 		{
-			init_tile(&game->tileset->tiles[y * game->map->width + x], x, y,
+			init_map_render_node(&game->tileset->tiles[y * game->map->width + x], x, y,
 				game);
 			game->tileset->tiles[y * game->map->width + x]->x = x;
 			game->tileset->tiles[y * game->map->width + x]->y = y;
