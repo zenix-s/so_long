@@ -42,10 +42,6 @@ t_bool	update_moves_string(t_game *game);
 // ARGUMENTS VALIDATION
 t_bool	check_arguments(int argc, char **argv);
 
-// IS TILESET TYPE
-
-// PLAYER
-void	print_layout(t_game *game);
 
 // MAP VALIDATION
 
@@ -53,7 +49,7 @@ void	print_layout(t_game *game);
 void	end_game(t_game *game, t_bool success);
 void	end_mlx(t_game *game);
 
-// HOOKS
+// HOOK
 void	ft_player_hook(t_game *game);
 
 #endif

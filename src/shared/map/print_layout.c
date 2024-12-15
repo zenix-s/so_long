@@ -6,11 +6,11 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:09:16 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:50:03 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../../include/shared/map_shared.h"
 
 void	print_layout(t_game *game)
 {
