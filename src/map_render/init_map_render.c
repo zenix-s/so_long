@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map_render.c                                     :+:      :+:    :+:   */
+/*   init_map_render.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:09:04 by serferna          #+#    #+#             */
-/*   Updated: 2024/09/04 14:09:46 by serferna         ###   ########.fr       */
+/*   Updated: 2024/12/15 16:05:05 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,12 @@ static t_bool	alloc_map_render(t_game *game)
 	return (TRUE);
 }
 
-static t_bool	init_map_render_node(t_tile **tile, int32_t x, int32_t y, t_game *game)
+static t_bool	init_map_render_node(
+	t_tile **tile,
+	int32_t x,
+	int32_t y,
+	t_game *game
+)
 {
 	*tile = (t_tile *)malloc(sizeof(t_tile));
 	if (*tile == NULL)
@@ -74,19 +79,20 @@ t_bool	init_map_render(t_game *game)
 		return (FALSE);
 	if (!load_map_render_node_textures(game))
 		return (FALSE);
-	y = 0;
-	while (y < game->map->height)
+	y = -1;
+	while (++y < game->map->height)
 	{
-		x = 0;
-		while (x < game->map->width)
+		x = -1;
+		while (++x < game->map->width)
 		{
-			init_map_render_node(&game->tileset->tiles[y * game->map->width + x], x, y,
+			init_map_render_node(
+				&game->tileset->tiles[y * game->map->width + x],
+				x,
+				y,
 				game);
 			game->tileset->tiles[y * game->map->width + x]->x = x;
 			game->tileset->tiles[y * game->map->width + x]->y = y;
-			x++;
 		}
-		y++;
 	}
 	game->tileset->n_tiles = game->map->height * game->map->width;
 	return (TRUE);
