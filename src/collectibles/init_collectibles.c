@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/collectibles/collectibles.h"
-#include "../../include/so_long.h"
+#include "../../include/shared.h"
 
 static t_bool	alloc_collectibles(t_game *game, int32_t n_collectibles)
 {
@@ -20,26 +20,37 @@ static t_bool	alloc_collectibles(t_game *game, int32_t n_collectibles)
 	game->collectibles = malloc(sizeof(t_collectibles));
 	if (game->collectibles == NULL)
 		return (ft_error("Failed to allocate memory for collectibles"), FALSE);
-	collectibles = (t_collectible **)malloc(sizeof(t_collectible *)
-			* n_collectibles);
+	collectibles = malloc(sizeof(t_collectible *) * n_collectibles);
+	if (collectibles == NULL)
+	{
+		free(game->collectibles);
+		game->collectibles = NULL;
+		return (ft_error("Allocation failed for collectibles"), FALSE);
+	}
 	game->collectibles->collectibles = collectibles;
-	if (game->collectibles->collectibles == NULL)
-		return (ft_error("Failed to allocate memory for collectibles"), FALSE);
 	game->collectibles->n_collectibles = n_collectibles;
-	game->collectibles
-		->textures = malloc(sizeof(t_collectible_texture));
+	game->collectibles->textures = malloc(sizeof(t_collectible_texture));
 	if (game->collectibles->textures == NULL)
-		return (ft_error("Failed to allocate memory for collectibles textures"),
-			FALSE);
+	{
+		free(game->collectibles->collectibles);
+		free(game->collectibles);
+		game->collectibles = NULL;
+		return (ft_error("Allocation failed for collectibles textures"), FALSE);
+	}
 	return (TRUE);
 }
 
-static t_bool	init_collectible(t_collectible **collectible, int32_t x,
-		int32_t y)
+static t_bool	init_collectible(
+	t_collectible **collectible,
+	int32_t x,
+	int32_t y
+)
 {
 	*collectible = (t_collectible *)malloc(sizeof(t_collectible));
 	if (*collectible == NULL)
+	{
 		return (ft_error("Failed to allocate memory for collectible"), FALSE);
+	}
 	(*collectible)->x = x;
 	(*collectible)->y = y;
 	(*collectible)->collected = FALSE;
@@ -48,16 +59,17 @@ static t_bool	init_collectible(t_collectible **collectible, int32_t x,
 
 static t_bool	load_collectibles_textures(t_game *game)
 {
-	game->collectibles
-		->textures
-		->collectible = mlx_load_png("textures/collectible.png");
+	game->collectibles->textures->collectible = mlx_load_png(COL_URL);
 	if (game->collectibles->textures->collectible == NULL)
+	{
 		return (ft_error("Failed to load collectible texture"), FALSE);
-	game->collectibles
-		->textures
-		->collectible_open = mlx_load_png("textures/collectible_open.png");
+	}
+	game->collectibles->textures->collectible_open = mlx_load_png(COL_OPEN_URL);
 	if (game->collectibles->textures->collectible_open == NULL)
+	{
+		mlx_delete_texture(game->collectibles->textures->collectible);
 		return (ft_error("Failed to load collectible_open texture"), FALSE);
+	}
 	return (TRUE);
 }
 

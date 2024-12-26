@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/player/player.h"
-#include <time.h>
 
 static t_bool	alloc_player(t_game *game)
 {
@@ -19,11 +18,15 @@ static t_bool	alloc_player(t_game *game)
 
 	game->player = (t_player *)malloc(sizeof(t_player));
 	if (game->player == NULL)
+	{
 		return (ft_error("Failed to allocate memory for player"), FALSE);
+	}
 	texture = (t_player_texture *)malloc(sizeof(t_player_texture));
 	game->player->textures = texture;
 	if (game->player->textures == NULL)
+	{
 		return (ft_error("Failed to allocate memory for player"), FALSE);
+	}
 	return (TRUE);
 }
 

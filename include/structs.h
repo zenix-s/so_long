@@ -138,19 +138,6 @@ typedef struct s_map
 	int32_t					n_collectibles;
 }							t_map;
 
-// DISJOINT SET (FOR MAP VALIDATION)
-// typedef struct s_dis_item
-// {
-// 	struct s_dis_item		*parent;
-// 	int32_t					x;
-// 	int32_t					y;
-// }							t_dis_item;
-
-// typedef struct s_dis_set
-// {
-// 	t_dis_item				**items;
-// 	int32_t					size;
-// }							t_dis_set;
 
 // GAME PRINCIPAL STRUCT
 typedef struct s_game

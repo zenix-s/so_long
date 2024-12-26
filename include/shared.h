@@ -14,6 +14,12 @@
 
 # define SHARED_H
 
+// TEXTURES URL
+// "textures/collectible.png"
+# define COL_URL "textures/collectible.png"
+// "textures/collectible_open.png"
+# define COL_OPEN_URL "textures/collectible_open.png"
+
 // MLX42 LIB
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 

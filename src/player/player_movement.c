@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/player/player.h"
-#include "../../include/so_long.h"
 
 static t_bool	cacl_new_pos(t_game *game, int32_t *new_x, int32_t *new_y)
 {
@@ -44,13 +43,6 @@ t_bool	ft_player_move(t_game *game)
 	if (is_floor(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
 	{
 		game->player->moves++;
-		if (is_collectible(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
-			collect_collectible(game, new_x / TILE_SIZE, new_y / TILE_SIZE);
-		if (is_exit(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
-		{
-			if (all_collected(game))
-				end_game(game, TRUE);
-		}
 		game->player->img->instances[0].x = new_x;
 		game->player->img->instances[0].y = new_y;
 		game->player->x = new_x / TILE_SIZE;

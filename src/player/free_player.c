@@ -15,9 +15,13 @@
 void	free_player(t_game *game)
 {
 	if (game->player == NULL)
+	{
 		return ;
+	}
 	if (game->player->img != NULL)
+	{
 		mlx_delete_image(game->mlx, game->player->img);
+	}
 	if (game->player->textures != NULL)
 	{
 		mlx_delete_texture(game->player->textures->frame_1);

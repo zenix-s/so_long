@@ -21,11 +21,17 @@ t_bool	init_mlx(t_game *game)
 
 	width = game->map->width * TILE_SIZE;
 	height = game->map->height * TILE_SIZE;
-	mlx_get_monitor_size(0, &n1, &n2);
-	if (width > n1 || height > n2)
-		return (ft_error("Map is too big for the screen"), FALSE);
 	game->mlx = mlx_init(width, height, "so_long", FALSE);
 	if (game->mlx == NULL)
-		return (ft_error("Failed to initialize mlx"), FALSE);
+	{
+		ft_error("Failed to initialize mlx");
+		return (FALSE);
+	}
+	mlx_get_monitor_size(0, &n1, &n2);
+	if (width > n1 || height > n2)
+	{
+		ft_error("Map is too big for the screen");
+		return (FALSE);
+	}
 	return (true);
 }

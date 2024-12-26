@@ -15,6 +15,9 @@
 void	end_mlx(t_game *game)
 {
 	if (game->mlx == NULL)
+	{
 		return ;
+	}
 	mlx_terminate(game->mlx);
+	game->mlx = NULL;
 }

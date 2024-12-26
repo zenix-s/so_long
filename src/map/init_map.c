@@ -31,17 +31,19 @@ static t_bool	alloc_map(t_game *game)
 static t_bool	re_alloc_layout(t_game *game, t_map_node_item ****new_layout)
 {
 	int32_t	i;
+	int32_t	j;
 
 	*new_layout = malloc(sizeof(t_map_node_item **) * (game->map->height + 1));
 	if (*new_layout == NULL)
 		return (ft_error("Failed to allocate memory for map"), FALSE);
 	i = -1;
 	while (++i < game->map->height)
+	{
 		(*new_layout)[i] = game->map->layout[i];
+	}
 	(*new_layout)[i] = malloc(sizeof(t_map_node_item *) * game->map->width);
 	if ((*new_layout)[i] == NULL)
 	{
-		free(*new_layout);
 		return (ft_error("Failed to allocate memory for map"), FALSE);
 	}
 	return (TRUE);
@@ -51,8 +53,7 @@ static t_bool	init_item(
 	t_game *game,
 	t_map_node_item **item,
 	int32_t x,
-	char type
-)
+	char type)
 {
 	if (!is_valid_char(type))
 		return (ft_error("Invalid character in map"), FALSE);
@@ -75,7 +76,11 @@ static t_bool	alloc_layout(t_game *game, char *line)
 		return (FALSE);
 	new_layout = NULL;
 	if (!re_alloc_layout(game, &new_layout))
+	{
+		if (new_layout != NULL)
+			free(new_layout);
 		return (FALSE);
+	}
 	i = -1;
 	while (++i < game->map->width)
 	{
@@ -105,13 +110,12 @@ t_bool	init_map(t_game *game, char **file_path)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (!alloc_layout(game, line))
-			return (free(line), FALSE);
+			return (free(line), close(fd), FALSE);
 		free(line);
 		game->map->height++;
 	}
-	if (!valid_map(game))
-		return (close(fd), FALSE);
-	if (!valid_path(game))
-		return (close(fd), FALSE);
-	return (close(fd), TRUE);
+	close(fd);
+	if (!valid_map(game) || !valid_path(game))
+		return (FALSE);
+	return (TRUE);
 }

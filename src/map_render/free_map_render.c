@@ -39,7 +39,11 @@ void	free_map_render(t_game *game)
 			if (game->tileset->tiles[i] == NULL)
 				continue ;
 			if (game->tileset->tiles[i]->img != NULL)
-				mlx_delete_image(game->mlx, game->tileset->tiles[i]->img);
+			{
+				mlx_delete_image(
+					game->mlx,
+					game->tileset->tiles[i]->img);
+			}
 			free(game->tileset->tiles[i]);
 		}
 		free(game->tileset->tiles);

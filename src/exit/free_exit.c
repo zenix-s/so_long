@@ -15,9 +15,13 @@
 void	free_exit(t_game *game)
 {
 	if (game->exit == NULL)
+	{
 		return ;
+	}
 	if (game->exit->img != NULL)
+	{
 		mlx_delete_image(game->mlx, game->exit->img);
+	}
 	if (game->exit->textures != NULL)
 	{
 		mlx_delete_texture(game->exit->textures->exit_open);

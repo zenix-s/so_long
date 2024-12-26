@@ -14,12 +14,9 @@
 
 static void	free_collectibles_textures(t_game *game)
 {
-	if (game->collectibles->textures != NULL)
-	{
-		mlx_delete_texture(game->collectibles->textures->collectible);
-		mlx_delete_texture(game->collectibles->textures->collectible_open);
-		free(game->collectibles->textures);
-	}
+	mlx_delete_texture(game->collectibles->textures->collectible);
+	mlx_delete_texture(game->collectibles->textures->collectible_open);
+	free(game->collectibles->textures);
 }
 
 void	free_collectibles(t_game *game)
@@ -32,13 +29,21 @@ void	free_collectibles(t_game *game)
 	while (++i < game->collectibles->n_collectibles)
 	{
 		if (game->collectibles->collectibles[i] == NULL)
+		{
 			continue ;
+		}
 		if (game->collectibles->collectibles[i]->img != NULL)
-			mlx_delete_image(game->mlx,
+		{
+			mlx_delete_image(
+				game->mlx,
 				game->collectibles->collectibles[i]->img);
+		}
 		free(game->collectibles->collectibles[i]);
 	}
-	free_collectibles_textures(game);
+	if (game->collectibles->textures != NULL)
+	{
+		free_collectibles_textures(game);
+	}
 	free(game->collectibles->collectibles);
 	free(game->collectibles);
 }

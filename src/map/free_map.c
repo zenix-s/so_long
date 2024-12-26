@@ -14,17 +14,26 @@
 
 void	free_map(t_game *game)
 {
-	int32_t	i;
+	int32_t	y;
+	int32_t	x;
 
 	if (game->map == NULL)
 		return ;
-	i = -1;
-	while (++i < game->map->height)
+	y = -1;
+	while (++y < game->map->height)
 	{
-		if (game->map->layout[i] == NULL)
+		x = -1;
+		if (game->map->layout[y] == NULL)
 			continue ;
-		free(game->map->layout[i]);
+		while (++x < game->map->width)
+		{
+			if (game->map->layout[y][x] == NULL)
+				continue ;
+			free(game->map->layout[y][x]);
+		}
+		free(game->map->layout[y]);
 	}
 	free(game->map->layout);
+	free(game->map->collectibles);
 	free(game->map);
 }

@@ -32,6 +32,9 @@
 // MAP_RENDER
 # include "./map_reder/map_render.h"
 
+// ARGUMENTS VALIDATION
+t_bool	check_arguments(int argc, char **argv);
+
 // INIT STRUCTS
 t_bool	init_mlx(t_game *game);
 t_bool	init_game(t_game **game);
@@ -39,15 +42,11 @@ t_bool	init_game(t_game **game);
 // TEXT MOVES
 t_bool	update_moves_string(t_game *game);
 
-// ARGUMENTS VALIDATION
-t_bool	check_arguments(int argc, char **argv);
-
-
-// MAP VALIDATION
-
 // END GAME (FREE STRUCTS)
 void	end_game(t_game *game, t_bool success);
 void	end_mlx(t_game *game);
+
+void	free_game(t_game *game);
 
 // HOOK
 void	ft_player_hook(t_game *game);
