@@ -31,7 +31,6 @@ static t_bool	alloc_map(t_game *game)
 static t_bool	re_alloc_layout(t_game *game, t_map_node_item ****new_layout)
 {
 	int32_t	i;
-	int32_t	j;
 
 	*new_layout = malloc(sizeof(t_map_node_item **) * (game->map->height + 1));
 	if (*new_layout == NULL)
