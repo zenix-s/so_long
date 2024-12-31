@@ -16,6 +16,8 @@ void	end_game(t_game *game, t_bool success)
 {
 	free_game(game);
 	if (success)
+	{
 		exit(EXIT_SUCCESS);
+	}
 	exit(EXIT_FAILURE);
 }

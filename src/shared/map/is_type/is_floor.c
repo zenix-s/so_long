@@ -18,6 +18,8 @@ t_bool	is_floor(const t_game *game, const int32_t x, const int32_t y)
 		|| game->map->layout[y][x]->type == COLLECTIBLE
 		|| game->map->layout[y][x]->type == EXIT
 		|| game->map->layout[y][x]->type == PLAYER)
+	{
 		return (TRUE);
+	}
 	return (FALSE);
 }

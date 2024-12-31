@@ -13,7 +13,7 @@
 #include "../../../include/player/player.h"
 #include "../../../include/shared.h"
 
-static void	charge_player_animation(t_game *game)
+static void	player_animation(t_game *game)
 {
 	if (game->player->player_time >= 0.25)
 	{
@@ -39,19 +39,22 @@ static void	charge_player_animation(t_game *game)
 	}
 }
 
+static double calculate_player_time_move(void)
+{
+	 return (TILE_SIZE / CHARACTER_SPEED);
+}
+
 void	ft_player_hook(t_game *game)
 {
 	double	current_time;
 	double	delta_time;
-	double	time_per_move;
 
 	current_time = mlx_get_time();
 	delta_time = current_time - game->last_time;
 	game->last_time = current_time;
 	game->time_accumulated += delta_time;
 	game->player->player_time += delta_time;
-	time_per_move = TILE_SIZE / CHARACTER_SPEED;
-	if (game->time_accumulated >= time_per_move)
+	if (game->time_accumulated >= calculate_player_time_move())
 	{
 		if (ft_player_move(game))
 		{
@@ -59,5 +62,5 @@ void	ft_player_hook(t_game *game)
 			game->time_accumulated = 0;
 		}
 	}
-	charge_player_animation(game);
+	player_animation(game);
 }

@@ -18,7 +18,9 @@ static int32_t	line_len(char *line)
 
 	len = 0;
 	while (line[len] != '\0' && line[len] != '\n')
+	{
 		len++;
+	}
 	return (len);
 }
 
@@ -28,9 +30,13 @@ t_bool	validate_line(t_game *game, char *line)
 	{
 		game->map->width = line_len(line);
 		if (game->map->width <= 2)
+		{
 			return (ft_error("Invalid line length"), FALSE);
+		}
 	}
 	if (game->map->height != 0 && game->map->width != line_len(line))
+	{
 		return (ft_error("Invalid line length"), FALSE);
+	}
 	return (TRUE);
 }

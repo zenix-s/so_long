@@ -32,7 +32,9 @@ t_bool	check_border(t_game *game)
 		}
 		else if (!is_wall(game, 0, y) || !is_wall(game, game->map->width - 1,
 				y))
+		{
 			return (ft_error("Map is not surrounded by walls"), FALSE);
+		}
 	}
 	return (TRUE);
 }

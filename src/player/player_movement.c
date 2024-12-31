@@ -39,7 +39,9 @@ t_bool	ft_player_move(t_game *game)
 	int	new_y;
 
 	if (!cacl_new_pos(game, &new_x, &new_y))
+	{
 		return (FALSE);
+	}
 	if (is_floor(game, new_x / TILE_SIZE, new_y / TILE_SIZE))
 	{
 		game->player->moves++;

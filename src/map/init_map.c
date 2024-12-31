@@ -34,7 +34,9 @@ static t_bool	re_alloc_layout(t_game *game, t_map_node_item ****new_layout)
 
 	*new_layout = malloc(sizeof(t_map_node_item **) * (game->map->height + 1));
 	if (*new_layout == NULL)
+	{
 		return (ft_error("Failed to allocate memory for map"), FALSE);
+	}
 	i = -1;
 	while (++i < game->map->height)
 	{

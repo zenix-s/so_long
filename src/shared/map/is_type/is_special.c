@@ -17,6 +17,8 @@ t_bool	is_special(const t_game *game, const int32_t x, const int32_t y)
 	if (game->map->layout[y][x]->type == COLLECTIBLE
 		|| game->map->layout[y][x]->type == PLAYER
 		|| game->map->layout[y][x]->type == EXIT)
+	{
 		return (TRUE);
+	}
 	return (FALSE);
 }

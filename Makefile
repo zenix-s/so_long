@@ -1,27 +1,25 @@
+#------------------------------------------------------------------------------#
+#                                VARIABLES                                     #
+#------------------------------------------------------------------------------#
 NAME	= so_long
 
-# DIRECTORIES
 SRCS	= $(shell find ./src -iname "*.c")
 OBJS	= ${SRCS:.c=.o}
 
-# Includes
 HEADERS	= -I ./include -I $(LIBMLX)/include
 
-# LIBRARIES
-
 LIBFT_SRC = ./lib/libft
-
 LIBMLX	= ./lib/MLX42
-
 LIBS	= $(LIBMLX)/build/libmlx42.a $(LIBFT_SRC)/libft.a -ldl -lglfw -pthread -lm
 
 
-# VARIABLES
 CC = cc
 CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g3
 RM = rm -rf
 
-
+#------------------------------------------------------------------------------#
+#                                 TARGETS                                      #
+#------------------------------------------------------------------------------#
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
@@ -47,5 +45,8 @@ fclean: clean
 
 re: clean all
 
+#------------------------------------------------------------------------------#
+#                                  GENERICS                                    #
+#------------------------------------------------------------------------------#
 .PHONY: all, clean, fclean, re, libmlx, libft
-.DEFAULT_GOAL = all
+DEFAULT_GOAL: all

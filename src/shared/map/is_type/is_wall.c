@@ -15,6 +15,8 @@
 t_bool	is_wall(const t_game *game, const int32_t x, const int32_t y)
 {
 	if (game->map->layout[y][x]->type == WALL)
+	{
 		return (TRUE);
+	}
 	return (FALSE);
 }

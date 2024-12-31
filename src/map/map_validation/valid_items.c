@@ -15,10 +15,16 @@
 t_bool	valid_items(t_game *game)
 {
 	if (game->map->player == NULL)
+	{
 		return (ft_error("Player not found"), FALSE);
+	}
 	if (game->map->exit == NULL)
+	{
 		return (ft_error("Exit not found"), FALSE);
+	}
 	if (game->map->n_collectibles == 0)
+	{
 		return (ft_error("Collectible not found"), FALSE);
+	}
 	return (TRUE);
 }

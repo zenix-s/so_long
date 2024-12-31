@@ -50,7 +50,9 @@ static t_bool	load_player_textures(t_game *game)
 static t_bool	find_player(t_game *game, int32_t *x, int32_t *y)
 {
 	if (game->map->player == NULL)
+	{
 		return (ft_error("Player starting position not found"), FALSE);
+	}
 	*x = game->map->player->x;
 	*y = game->map->player->y;
 	return (TRUE);
@@ -62,11 +64,17 @@ t_bool	init_player(t_game *game)
 	int32_t	y;
 
 	if (!alloc_player(game))
+	{
 		return (FALSE);
+	}
 	if (!find_player(game, &x, &y))
+	{
 		return (FALSE);
+	}
 	if (!load_player_textures(game))
+	{
 		return (FALSE);
+	}
 	game->player->x = x;
 	game->player->y = y;
 	game->player->moves = 0;

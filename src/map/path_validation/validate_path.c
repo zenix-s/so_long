@@ -38,7 +38,9 @@ static void	union_items(t_map_node_item *item1, t_map_node_item *item2)
 	root1 = get_parent(item1);
 	root2 = get_parent(item2);
 	if (root1 != root2)
+	{
 		root2->parent = root1;
+	}
 }
 
 static void	generate_tree(t_game *game)
