@@ -20,7 +20,7 @@ void	collect_collectible(t_game *game, int32_t x, int32_t y)
 	int32_t	index;
 
 	index = 0;
-	while (index < (game->collectibles->n_collectibles))
+	while (index < game->collectibles->n_collectibles)
 	{
 		if (game->collectibles->collectibles[index]->x == x
 			&& game->collectibles->collectibles[index]->y == y

@@ -108,7 +108,7 @@ t_bool	init_map(t_game *game, char **file_path)
 		return (ft_error("Failed to open map file\n"), FALSE);
 	game->map->height = 0;
 	line = NULL;
-	while (get_next_line(fd, &line) > 0)
+	while (get_next_line(fd, &line) >= 0)
 	{
 		if (!alloc_layout(game, line))
 			return (free(line), close(fd), FALSE);

@@ -88,7 +88,6 @@ int	main(int argc, char **argv)
 	render_game(game);
 	mlx_loop_hook(game->mlx, ft_game_hook, game);
 	mlx_loop(game->mlx);
-	ft_printf("Game ended\n");
 	free_game(game);
 	return (EXIT_SUCCESS);
 }
