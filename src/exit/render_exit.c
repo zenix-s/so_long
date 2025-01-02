@@ -10,18 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/exit/exit.h"
+#include "../../include/shared.h"
 
 t_bool	render_closed_exit(t_game *game)
 {
-	game->exit->img = mlx_texture_to_image(game->mlx,
+	game->exit->img = mlx_texture_to_image(
+			game->mlx,
 			game->exit->textures->exit_closed);
 	if (game->exit->img == NULL)
 	{
 		return (ft_error("Failed to create exit image"), FALSE);
 	}
-	if (mlx_image_to_window(game->mlx, game->exit->img, game->exit->x
-	                                                    * TILE_SIZE, game->exit->y * TILE_SIZE) == -1)
+	if (mlx_image_to_window(
+			game->mlx,
+			game->exit->img,
+			game->exit->x * TILE_SIZE, game->exit->y * TILE_SIZE) == -1
+	)
 	{
 		return (ft_error("Failed to render exit image"), FALSE);
 	}

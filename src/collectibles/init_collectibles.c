@@ -78,15 +78,23 @@ t_bool	init_collectibles(t_game *game)
 	int32_t	i;
 
 	if (!alloc_collectibles(game, game->map->n_collectibles))
+	{
 		return (FALSE);
+	}
 	if (!load_collectibles_textures(game))
+	{
 		return (FALSE);
+	}
 	i = -1;
 	while (++i < game->map->n_collectibles)
 	{
-		if (!init_collectible(&game->collectibles->collectibles[i],
-				game->map->collectibles[i]->x, game->map->collectibles[i]->y))
+		if (!init_collectible(
+				&game->collectibles->collectibles[i],
+				game->map->collectibles[i]->x, game->map->collectibles[i]->y)
+		)
+		{
 			return (FALSE);
+		}
 	}
 	return (TRUE);
 }

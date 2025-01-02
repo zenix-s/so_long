@@ -49,4 +49,4 @@ re: clean all
 #                                  GENERICS                                    #
 #------------------------------------------------------------------------------#
 .PHONY: all, clean, fclean, re, libmlx, libft
-DEFAULT_GOAL: all
+.DEFAULT_GOAL = all

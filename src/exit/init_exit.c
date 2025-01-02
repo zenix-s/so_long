@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/so_long.h"
+#include "../../include/exit/exit.h"
+#include "../../include/shared.h"
 
 static t_bool	alloc_exit(t_game *game)
 {

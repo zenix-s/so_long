@@ -24,10 +24,14 @@ void	free_player(t_game *game)
 	}
 	if (game->player->textures != NULL)
 	{
-		mlx_delete_texture(game->player->textures->frame_1);
-		mlx_delete_texture(game->player->textures->frame_2);
-		mlx_delete_texture(game->player->textures->frame_3);
-		mlx_delete_texture(game->player->textures->frame_4);
+		if (game->player->textures->frame_1 != NULL)
+			mlx_delete_texture(game->player->textures->frame_1);
+		if (game->player->textures->frame_2 != NULL)
+			mlx_delete_texture(game->player->textures->frame_2);
+		if (game->player->textures->frame_3 != NULL)
+			mlx_delete_texture(game->player->textures->frame_3);
+		if (game->player->textures->frame_4 != NULL)
+			mlx_delete_texture(game->player->textures->frame_4);
 		free(game->player->textures);
 	}
 	free(game->player);

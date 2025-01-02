@@ -39,9 +39,9 @@ static void	player_animation(t_game *game)
 	}
 }
 
-static double calculate_player_time_move(void)
+static double	calculate_player_time_move(void)
 {
-	 return (TILE_SIZE / CHARACTER_SPEED);
+	return (TILE_SIZE / CHARACTER_SPEED);
 }
 
 void	ft_player_hook(t_game *game)

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/exit/exit.h"
+#include <time.h>
 
 void	free_exit(t_game *game)
 {
@@ -29,4 +30,5 @@ void	free_exit(t_game *game)
 		free(game->exit->textures);
 	}
 	free(game->exit);
+	game->exit = NULL;
 }
