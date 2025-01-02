@@ -26,7 +26,8 @@ static void	ft_game_hook(void *param)
 	if (is_exit(game, game->player->x, game->player->y) && all_collected(game))
 	{
 		ft_printf("You win! Moves: %d\n", game->player->moves);
-		end_game(game, TRUE);
+		// end_game(game, TRUE);
+		mlx_close_window(game->mlx);
 	}
 	if (all_collected(game) && game->exit->open == FALSE)
 	{
@@ -34,8 +35,10 @@ static void	ft_game_hook(void *param)
 	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 	{
-		free_game(game);
 		mlx_close_window(game->mlx);
+		// ft_printf("Closing window\n");
+		// free_game(game);
+		// end_game(game, FALSE);
 	}
 }
 
@@ -89,6 +92,7 @@ int	main(int argc, char **argv)
 	render_game(game);
 	mlx_loop_hook(game->mlx, ft_game_hook, game);
 	mlx_loop(game->mlx);
+	ft_printf("Game ended\n");
 	free_game(game);
 	return (EXIT_SUCCESS);
 }

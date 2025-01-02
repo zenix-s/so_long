@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/player/player.h"
-#include "../../include/so_long.h"
+#include "../../include/shared.h"
 
 t_bool	render_player(t_game *game)
 {
@@ -21,9 +21,11 @@ t_bool	render_player(t_game *game)
 	{
 		return (ft_error("Failed to create player image"), FALSE);
 	}
-	if (mlx_image_to_window(game->mlx, game->player->img,
-		game->player->x * TILE_SIZE,
-		game->player->y * TILE_SIZE) == -1)
+	if (mlx_image_to_window(
+			game->mlx,
+			game->player->img,
+			game->player->x * TILE_SIZE,
+			game->player->y * TILE_SIZE) == -1)
 	{
 		return (ft_error("Failed to display player image"), FALSE);
 	}
