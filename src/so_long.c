@@ -25,7 +25,7 @@ static void	ft_game_hook(void *param)
 	}
 	if (is_exit(game, game->player->x, game->player->y) && all_collected(game))
 	{
-		ft_printf("You win! Moves: %d\n", game->player->moves);
+		ft_printf("You win!\n");
 		mlx_close_window(game->mlx);
 	}
 	if (all_collected(game) && game->exit->open == FALSE)
@@ -88,6 +88,7 @@ int	main(int argc, char **argv)
 	render_game(game);
 	mlx_loop_hook(game->mlx, ft_game_hook, game);
 	mlx_loop(game->mlx);
+	ft_printf("Game ended with %d moves\n", game->player->moves);
 	free_game(game);
 	return (EXIT_SUCCESS);
 }
