@@ -108,7 +108,6 @@ t_bool	init_map(t_game *game, char **file_path)
 	fd = open(file_path[1], O_RDONLY);
 	if (fd <= 1)
 		return (ft_error("Failed to open map file\n"), FALSE);
-	game->map->height = 0;
 	line = NULL;
 	while (get_next_line(fd, &line) >= 0)
 	{

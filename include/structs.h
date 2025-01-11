@@ -138,7 +138,6 @@ typedef struct s_map
 	int32_t					n_collectibles;
 }							t_map;
 
-
 // GAME PRINCIPAL STRUCT
 typedef struct s_game
 {
