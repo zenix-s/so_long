@@ -6,12 +6,13 @@
 /*   By: serferna <serferna@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:08:31 by serferna          #+#    #+#             */
-/*   Updated: 2024/12/08 13:33:17 by serferna         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:28:42 by serferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/map/map.h"
 #include "../../include/map/map_private.h"
+#include <stdlib.h>
 
 static t_bool	alloc_map(t_game *game)
 {
@@ -45,6 +46,7 @@ static t_bool	re_alloc_layout(t_game *game, t_map_node_item ****new_layout)
 	(*new_layout)[i] = malloc(sizeof(t_map_node_item *) * game->map->width);
 	if ((*new_layout)[i] == NULL)
 	{
+		free(*new_layout);
 		return (ft_error("Failed to allocate memory for map"), FALSE);
 	}
 	return (TRUE);
@@ -73,22 +75,22 @@ static t_bool	alloc_layout(t_game *game, char *line)
 	t_map_node_item	***new_layout;
 	int32_t			i;
 
-	if (!validate_line(game, line))
-		return (FALSE);
 	new_layout = NULL;
-	if (!re_alloc_layout(game, &new_layout))
-	{
-		if (new_layout != NULL)
-			free(new_layout);
+	if (!validate_line(game, line) || !re_alloc_layout(game, &new_layout))
 		return (FALSE);
-	}
 	i = -1;
 	while (++i < game->map->width)
 	{
-		if (!init_item(game, &new_layout[game->map->height][i], i, line[i]))
+		if (!init_item(game, &new_layout[game->map->height][i], i, line[i])
+			|| !validate_item(game, new_layout[game->map->height][i]))
+		{
+			if (new_layout[game->map->height][i] != NULL)
+				free(new_layout[game->map->height][i]);
+			while (--i >= 0)
+				free(new_layout[game->map->height][i]);
+			free(new_layout[game->map->height]);
 			return (free(new_layout), FALSE);
-		if (!validate_item(game, new_layout[game->map->height][i]))
-			return (free(new_layout), FALSE);
+		}
 	}
 	if (game->map->layout != NULL)
 		free(game->map->layout);
@@ -111,7 +113,12 @@ t_bool	init_map(t_game *game, char **file_path)
 	while (get_next_line(fd, &line) >= 0)
 	{
 		if (!alloc_layout(game, line))
-			return (free(line), close(fd), FALSE);
+		{
+			free(line);
+			while (get_next_line(fd, &line) >= 0)
+				free(line);
+			return (close(fd), FALSE);
+		}
 		free(line);
 		game->map->height++;
 	}
